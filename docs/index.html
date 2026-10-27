@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>French Presidential Election 2027 – Candidates</title>
+<style>
+  :root{
+    --bg:#f6f5f1; --card:#ffffff; --ink:#1b1f2a; --muted:#5b6272; --line:#e1ded5;
+    --blue:#1f3a8a; --red:#c8102e; --accent:#1f3a8a;
+    --declared:#1f7a4d; --considering:#b26a00; --out:#7a7f8c;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14161c; --card:#1d2029; --ink:#eceef3; --muted:#a0a6b5; --line:#2e3240; --accent:#8fa8ff;
+      --declared:#5fcf94; --considering:#f0b34d; --out:#8e94a3; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  header{border-top:6px solid transparent;border-image:linear-gradient(90deg,#1f3a8a 33%,#fff 33% 66%,#c8102e 66%) 1;background:var(--card);border-bottom:1px solid var(--line)}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+  header .wrap{padding-top:28px;padding-bottom:24px}
+  h1{margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:0}
+  .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .fact{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.9rem}
+  .fact b{display:block;font-size:1.05rem}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0 8px}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px}
+  button.tab{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 14px;border-radius:999px;font:inherit;font-size:.92rem;cursor:pointer}
+  button.tab[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+  @media (prefers-color-scheme: dark){ button.tab[aria-pressed="true"]{color:#10131a} }
+  input[type=search]{flex:1;min-width:180px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit}
+  h2{font-size:1.15rem;margin:28px 0 10px;display:flex;align-items:center;gap:10px}
+  h2 small{color:var(--muted);font-weight:400;font-size:.85rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+  .card h3{margin:0;font-size:1.05rem}
+  .party{color:var(--muted);font-size:.9rem}
+  .note{font-size:.9rem;margin:2px 0 0}
+  .badge{display:inline-block;align-self:flex-start;font-size:.72rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;padding:2px 9px;border-radius:999px;border:1px solid currentColor}
+  .b-declared{color:var(--declared)} .b-considering{color:var(--considering)} .b-out{color:var(--out)}
+  .empty{color:var(--muted);padding:20px 0}
+  footer{margin:36px 0 48px;color:var(--muted);font-size:.88rem}
+  footer a{color:var(--accent)}
+  footer ul{padding-left:18px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>French Presidential Election 2027</h1>
+    <p class="sub">Candidates declared, considering, and no longer in the race — status as of 27 October 2026</p>
+    <div class="facts">
+      <div class="fact"><b>18 April 2027</b>First round</div>
+      <div class="fact"><b>2 May 2027</b>Runoff (if needed)</div>
+      <div class="fact"><b>500 sponsorships</b>Required from elected officials</div>
+      <div class="fact"><b id="count-declared">–</b>Declared candidacies listed</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="controls">
+    <div class="tabs" id="tabs" role="group" aria-label="Filter by status"></div>
+    <input type="search" id="q" placeholder="Search name or party…" aria-label="Search candidates">
+  </div>
+  <div id="list"></div>
+
+  <footer>
+    <p><b>Notes.</b> This list is provisional. Only candidates who gather 500 valid sponsorships and are validated by the Constitutional Council will appear on the ballot (12 did in 2022). Presidents are limited to two consecutive terms, so Emmanuel Macron cannot run. Within each group, candidates are ordered roughly from left to right; order carries no other meaning.</p>
+    <p>Sources (checked 26–27 Oct 2026):</p>
+    <ul>
+      <li><a href="https://www.france-vote.fr/candidats">France-Vote – Les candidats à la présidentielle 2027</a></li>
+      <li><a href="https://www.publicsenat.fr/actualites/politique/election-presidentielle-2027-qui-sont-les-candidats-declares-ou-presque">Public Sénat – Candidats déclarés ou presque</a></li>
+      <li><a href="https://www.touteleurope.eu/vie-politique-des-etats-membres/presidentielle-2027-qui-sont-les-candidats-deja-declares/">Toute l'Europe – Candidats déjà déclarés</a></li>
+      <li><a href="https://lepetitjournal.com/expat-politique/actualites/presidentielle-glucksmann-designe-des-le-premier-tour-comme-le-candidat-de-la-gauche-sociale-455938">AFP / lepetitjournal – Glucksmann wins social-democratic primary</a></li>
+      <li><a href="https://www.cnn.com/2026/07/07/europe/marine-le-pen-france-court-ruling-intl">CNN – Le Pen appeal ruling and candidacy</a></li>
+      <li><a href="https://www.euronews.com/2026/10/14/french-journalist-natacha-polony-joins-growing-field-of-2027-presidential-hopefuls">Euronews – Natacha Polony joins the field</a></li>
+      <li><a href="https://lcp.fr/actualites/presidentielle-2027-la-liste-des-candidats-deja-en-lice-et-des-pretendants-436373">LCP – Candidats en lice et prétendants</a></li>
+    </ul>
+  </footer>
+</main>
+
+<script>
+const D="declared", C="considering", O="out";
+const candidates = [
+  // Far left
+  {n:"Nathalie Arthaud", p:"Lutte ouvrière", g:"Far left", s:D, t:"Fourth consecutive run, after 2012, 2017 and 2022."},
+  {n:"Anasse Kazib", p:"Révolution permanente", g:"Far left", s:D, t:"Rail union activist; announced 1 June 2026."},
+  {n:"Selma Labib", p:"NPA-Révolutionnaires", g:"Far left", s:D, t:"Party spokesperson; designated in June 2026."},
+  // Left
+  {n:"Jean-Luc Mélenchon", p:"La France insoumise", g:"Left", s:D, t:"Fourth run; candidacy validated by LFI on 3 May 2026."},
+  {n:"Fabien Roussel", p:"Parti communiste français", g:"Left", s:D, t:"National secretary of the PCF; confirmed by party members on 6 September."},
+  {n:"François Ruffin", p:"Debout !", g:"Left", s:D, t:"Deputy for the Somme; broke with LFI in 2024."},
+  {n:"Juan Branco", p:"Les Ruches (no party label)", g:"Left", s:D, t:"Lawyer and author; platform centred on citizen-initiated referendums."},
+  // Greens
+  {n:"Marine Tondelier", p:"Les Écologistes", g:"Greens", s:D, t:"Party members vote 10–13 December on keeping her candidacy or backing another left candidate."},
+  {n:"Delphine Batho", p:"Génération écologie", g:"Greens", s:D, t:"Former environment minister; deputy for Deux-Sèvres."},
+  // Social democrats
+  {n:"Raphaël Glucksmann", p:"Place publique", g:"Social democrats", s:D, t:"Won the PS–Place publique primary on 11 October with 66.17% in the first round."},
+  {n:"Bernard Cazeneuve", p:"La Convention", g:"Social democrats", s:D, t:"Former prime minister; officially declared in July, outside the primary."},
+  {n:"Karim Bouamrane", p:"Parti socialiste (mayor of Saint-Ouen)", g:"Social democrats", s:D, t:"Declared outside the PS primary."},
+  // Centre
+  {n:"Gabriel Attal", p:"Renaissance", g:"Centre", s:D, t:"Former prime minister; declared 22 May 2026."},
+  {n:"Édouard Philippe", p:"Horizons", g:"Centre", s:D, t:"Former prime minister; mayor of Le Havre; has declared since September 2024."},
+  {n:"Olivier Becht", p:"No party label (centrist deputy)", g:"Centre", s:D, t:"Listed as declared by France-Vote."},
+  // Right
+  {n:"Xavier Bertrand", p:"Nous France", g:"Right", s:D, t:"President of the Hauts-de-France region; running outside any primary."},
+  {n:"David Lisnard", p:"Nouvelle Énergie", g:"Right", s:D, t:"Mayor of Cannes; left Les Républicains on 31 March 2026."},
+  {n:"Bruno Retailleau", p:"Les Républicains", g:"Right", s:D, t:"Chosen by LR members on 19–20 April 2026."},
+  // Sovereignists
+  {n:"Nicolas Dupont-Aignan", p:"Debout la France", g:"Sovereignists", s:D, t:"Fourth run, after 2012, 2017 and 2022."},
+  {n:"François Asselineau", p:"Union populaire républicaine", g:"Sovereignists", s:D, t:"Favours leaving the EU, the euro and NATO; failed to reach 500 sponsorships in 2022."},
+  {n:"Florian Philippot", p:"Les Patriotes", g:"Sovereignists", s:D, t:"Announced 9 May 2026."},
+  {n:"Natacha Polony", p:"Nous sommes la France", g:"Sovereignists", s:D, t:"Journalist and essayist; announced 14 October 2026."},
+  // Far right
+  {n:"Marine Le Pen", p:"Rassemblement national", g:"Far right", s:D, t:"Conviction upheld on appeal on 7 July 2026 but her ineligibility was reduced, leaving her able to run. She declared that evening and is appealing to the Cour de cassation. Jordan Bardella is the RN's fallback if she cannot stand."},
+  {n:"Éric Zemmour", p:"Reconquête", g:"Far right", s:D, t:"Confirmed his candidacy on 17 September, per Public Sénat (France-Vote still lists it as unconfirmed)."},
+  // Other
+  {n:"Mira Markovic", p:"Parti animaliste", g:"Other", s:D, t:"Animal-welfare party candidate."},
+  {n:"Francis Lalanne", p:"France Libre", g:"Other", s:D, t:"Singer-songwriter turned candidate."},
+  {n:"Antoine Mikolajczak", p:"Équinoxe", g:"Other", s:D, t:"Engineer and party leader; announced 27 June 2026."},
+  {n:"Clara Egger", p:"Solution démocratique", g:"Other", s:D, t:"Academic; announced 20 April 2026."},
+  {n:"Manolo Mlekuz", p:"Trajectoire", g:"Other", s:D, t:"Minor candidacy reported by the press."},
+  {n:"Benoît Mathieu", p:"No party label", g:"Other", s:D, t:"Minor candidacy reported by the press."},
+  {n:"Jean-François Legendre", p:"À nous maintenant", g:"Other", s:D, t:"Minor candidacy reported by the press."},
+  {n:"Sylvain Durif", p:"Elvita", g:"Other", s:D, t:"Minor candidacy reported by the press."},
+
+  // Considering
+  {n:"Dominique de Villepin", p:"La France humaniste", g:"Centre", s:C, t:"Former prime minister. Said on 30 August he wants to be a candidate and claims several hundred of the 500 sponsorships, but has not formally declared."},
+  {n:"François Hollande", p:"Parti socialiste", g:"Social democrats", s:C, t:"Former president and deputy for Corrèze. Published a book in September and says he will announce his decision in December."},
+  {n:"Bruno Le Maire", p:"Renaissance (former minister)", g:"Centre", s:C, t:"Said he would announce his decision in October; no announcement found as of 26 October."},
+  {n:"Jean Lassalle", p:"Résistons !", g:"Sovereignists", s:C, t:"Says he holds half the needed sponsorships; running depends on a fundraising drive."},
+
+  // Out
+  {n:"Olivier Faure", p:"Parti socialiste", g:"Social democrats", s:O, t:"Came second in the primary with 14.46%."},
+  {n:"Ségolène Royal", p:"Parti socialiste", g:"Social democrats", s:O, t:"Third in the primary with 7.62%; said she backs the winner."},
+  {n:"Emmanuel Maurel", p:"Gauche républicaine et socialiste", g:"Left", s:O, t:"Fourth in the primary with 5.92%; pledged support to Glucksmann."},
+  {n:"Jérôme Guedj", p:"Parti socialiste", g:"Social democrats", s:O, t:"Fifth in the primary with 5.83%; will continue campaigning in a role set by Glucksmann."},
+  {n:"Philippe Brun", p:"Parti socialiste", g:"Social democrats", s:O, t:"Announced for the primary but was not on the final list of five."},
+  {n:"Clémentine Autain", p:"L'Après", g:"Left", s:O, t:"Withdrew on 11 July 2026 after the PS declined a broader left primary."}
+];
+
+const groups = [
+  {id:D, label:"Declared candidates", note:"Candidacies announced publicly; sponsorships not yet validated"},
+  {id:C, label:"Considering a run", note:"Have signalled interest but not formally declared"},
+  {id:O, label:"Not running / eliminated", note:"Withdrew or lost a primary"}
+];
+const badgeText = {declared:"Declared", considering:"Considering", out:"Out"};
+let filter = "all", query = "";
+
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+function renderTabs(){
+  const el = document.getElementById("tabs");
+  const defs = [{id:"all",label:"All ("+candidates.length+")"}]
+    .concat(groups.map(g=>({id:g.id,label:g.label.split(" ")[0]+" ("+candidates.filter(c=>c.s===g.id).length+")"})));
+  el.innerHTML = defs.map(d=>`<button class="tab" data-f="${d.id}" aria-pressed="${filter===d.id}">${d.label}</button>`).join("");
+  el.querySelectorAll("button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderTabs();renderList();});
+}
+
+function renderList(){
+  const q = query.trim().toLowerCase();
+  const match = c => !q || (c.n+" "+c.p+" "+c.g).toLowerCase().includes(q);
+  let html = "", total = 0;
+  groups.forEach(g=>{
+    if(filter!=="all" && filter!==g.id) return;
+    const items = candidates.filter(c=>c.s===g.id && match(c));
+    if(!items.length) return;
+    total += items.length;
+    html += `<h2>${g.label} <small>${items.length} · ${g.note}</small></h2><div class="grid">` +
+      items.map(c=>`<article class="card">
+        <span class="badge b-${c.s}">${badgeText[c.s]}</span>
+        <h3>${esc(c.n)}</h3>
+        <div class="party">${esc(c.p)} · ${esc(c.g)}</div>
+        <p class="note">${esc(c.t)}</p></article>`).join("") + `</div>`;
+  });
+  document.getElementById("list").innerHTML = html || '<p class="empty">No candidates match your search.</p>';
+}
+
+document.getElementById("q").addEventListener("input",e=>{query=e.target.value;renderList();});
+document.getElementById("count-declared").textContent = candidates.filter(c=>c.s===D).length;
+renderTabs(); renderList();
+</script>
+</body>
+</html>
