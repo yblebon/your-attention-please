@@ -31,7 +31,7 @@
   h2{color:#ffb347}
   .nana{font-size:1.05rem;letter-spacing:1px;line-height:1.2;margin:2px 0}
   .nana .ghost{filter:grayscale(1);opacity:.18}
-  .nana .na{font-size:.8rem;color:var(--muted);letter-spacing:0}
+  .nana .big{font-size:2rem;line-height:1}
   .legend{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:6px 0 0;font-size:.9rem;color:var(--muted)}
   .legend b{color:var(--ink)}
   @media (prefers-reduced-motion:reduce){.float,h1 .pk{animation:none}.card{transition:none}}
@@ -92,7 +92,7 @@
     <div class="tabs" id="tabs" role="group" aria-label="Filter by status"></div>
     <input type="search" id="q" placeholder="Search name or party…" aria-label="Search candidates">
   </div>
-  <div class="legend"><b>🍌 Banana scale:</b> the more bananas, the further left. 0 bananas = far right, 7 = far left. Based on each candidate's political family (far right → sovereignists → right → centre → social democrats → greens → left → far left), so it is an approximation, not a ranking of individuals. "Other" candidates have no place on the scale.</div>
+  <div class="legend"><b>🍌 Banana scale:</b> the more bananas, the further left. 0 bananas = far right, 7 = far left. Based on each candidate's political family (far right → sovereignists → right → centre → social democrats → greens → left → far left), so it is an approximation, not a ranking of individuals. "Other" candidates have no place on the scale and get one big banana.</div>
   <div id="list"></div>
 
   <footer>
@@ -182,7 +182,7 @@ let filter = "all", query = "";
 const BANANA_MAX = 7;
 const bananaScale = {"Far right":0,"Sovereignists":1,"Right":2,"Centre":3,"Social democrats":4,"Greens":5,"Left":6,"Far left":7};
 function bananas(g){
-  if(!(g in bananaScale)) return `<div class="nana" title="No place on the left–right scale"><span class="na">Left–right position: n/a</span></div>`;
+  if(!(g in bananaScale)) return `<div class="nana" title="No place on the left–right scale" aria-label="No place on the left–right scale"><span class="big">🍌</span></div>`;
   const n = bananaScale[g];
   return `<div class="nana" title="${n} of ${BANANA_MAX} bananas: ${g}" aria-label="${n} out of ${BANANA_MAX} bananas">` +
     "🍌".repeat(n) + `<span class="ghost">` + "🍌".repeat(BANANA_MAX-n) + `</span></div>`;
