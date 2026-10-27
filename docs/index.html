@@ -6,14 +6,35 @@
 <title>French Presidential Election 2027 – Candidates</title>
 <style>
   :root{
-    --bg:#f6f5f1; --card:#ffffff; --ink:#1b1f2a; --muted:#5b6272; --line:#e1ded5;
-    --blue:#1f3a8a; --red:#c8102e; --accent:#1f3a8a;
-    --declared:#1f7a4d; --considering:#b26a00; --out:#7a7f8c;
+    --bg:#120b1c; --card:#1d1230; --ink:#f3ecff; --muted:#b5a6cc; --line:#3a2559; --accent:#ff8a1f;
+    --declared:#7ee08a; --considering:#ffb347; --out:#a08fb8; --glow:rgba(255,138,31,.35);
   }
-  @media (prefers-color-scheme: dark){
-    :root{ --bg:#14161c; --card:#1d2029; --ink:#eceef3; --muted:#a0a6b5; --line:#2e3240; --accent:#8fa8ff;
-      --declared:#5fcf94; --considering:#f0b34d; --out:#8e94a3; }
-  }
+  body{background:radial-gradient(ellipse at 50% -10%,#3b1a5e 0,#120b1c 55%) fixed,#120b1c}
+  /* moon */
+  .moon{position:absolute;top:18px;right:6%;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff7d6,#f3d77a 70%);box-shadow:0 0 50px 12px rgba(255,230,140,.35);opacity:.9}
+  .moon::after{content:"";position:absolute;left:52%;top:28%;width:16px;height:16px;border-radius:50%;background:rgba(0,0,0,.08);box-shadow:-26px 30px 0 4px rgba(0,0,0,.07)}
+  header{position:relative;overflow:hidden}
+  header .wrap{position:relative;z-index:1}
+  /* fog + floating things */
+  .float{position:fixed;pointer-events:none;z-index:0;font-size:28px;opacity:.55;animation:drift linear infinite}
+  @keyframes drift{0%{transform:translate(0,0) rotate(-6deg)}50%{transform:translate(40px,-30px) rotate(6deg)}100%{transform:translate(0,0) rotate(-6deg)}}
+  main,footer{position:relative;z-index:1}
+  .web{position:absolute;top:0;left:0;width:150px;height:150px;opacity:.5;z-index:1}
+  h1{text-shadow:0 0 18px var(--glow)}
+  h1 .pk{display:inline-block;animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-4px) rotate(8deg)}}
+  .card{box-shadow:0 0 0 0 transparent;transition:transform .2s,box-shadow .2s,border-color .2s}
+  .card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 6px 22px var(--glow)}
+  .card h3::before{content:"🎃 ";font-size:.85em}
+  .card.c-considering h3::before{content:"👻 "}
+  .card.c-out h3::before{content:"💀 "}
+  h2{color:#ffb347}
+  .nana{font-size:1.05rem;letter-spacing:1px;line-height:1.2;margin:2px 0}
+  .nana .ghost{filter:grayscale(1);opacity:.18}
+  .nana .na{font-size:.8rem;color:var(--muted);letter-spacing:0}
+  .legend{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:6px 0 0;font-size:.9rem;color:var(--muted)}
+  .legend b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){.float,h1 .pk{animation:none}.card{transition:none}}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
   header{border-top:6px solid transparent;border-image:linear-gradient(90deg,#1f3a8a 33%,#fff 33% 66%,#c8102e 66%) 1;background:var(--card);border-bottom:1px solid var(--line)}
@@ -28,7 +49,7 @@
   .tabs{display:flex;flex-wrap:wrap;gap:8px}
   button.tab{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 14px;border-radius:999px;font:inherit;font-size:.92rem;cursor:pointer}
   button.tab[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
-  @media (prefers-color-scheme: dark){ button.tab[aria-pressed="true"]{color:#10131a} }
+  button.tab[aria-pressed="true"]{color:#1a0f00}
   input[type=search]{flex:1;min-width:180px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit}
   h2{font-size:1.15rem;margin:28px 0 10px;display:flex;align-items:center;gap:10px}
   h2 small{color:var(--muted);font-weight:400;font-size:.85rem}
@@ -46,9 +67,16 @@
 </style>
 </head>
 <body>
+<div class="float" style="left:6%;top:30%;animation-duration:9s">🦇</div>
+<div class="float" style="left:78%;top:55%;animation-duration:12s">👻</div>
+<div class="float" style="left:90%;top:20%;animation-duration:10s">🦇</div>
+<div class="float" style="left:3%;top:75%;animation-duration:14s">🕷️</div>
+<div class="float" style="left:55%;top:85%;animation-duration:11s">🦇</div>
 <header>
+  <div class="moon"></div>
+  <svg class="web" viewBox="0 0 150 150" fill="none" stroke="#d9c9f0" stroke-width="1"><path d="M0 0L150 0M0 0L150 50M0 0L150 110M0 0L110 150M0 0L50 150M0 0L0 150"/><path d="M30 0Q22 22 0 30M60 0Q45 45 0 60M95 0Q70 70 0 95M130 0Q95 95 0 130"/></svg>
   <div class="wrap">
-    <h1>French Presidential Election 2027</h1>
+    <h1><span class="pk">🎃</span> French Presidential Election 2027</h1>
     <p class="sub">Candidates declared, considering, and no longer in the race — status as of 27 October 2026</p>
     <div class="facts">
       <div class="fact"><b>18 April 2027</b>First round</div>
@@ -64,6 +92,7 @@
     <div class="tabs" id="tabs" role="group" aria-label="Filter by status"></div>
     <input type="search" id="q" placeholder="Search name or party…" aria-label="Search candidates">
   </div>
+  <div class="legend"><b>🍌 Banana scale:</b> the more bananas, the further left. 0 bananas = far right, 7 = far left. Based on each candidate's political family (far right → sovereignists → right → centre → social democrats → greens → left → far left), so it is an approximation, not a ranking of individuals. "Other" candidates have no place on the scale.</div>
   <div id="list"></div>
 
   <footer>
@@ -149,6 +178,16 @@ const groups = [
 const badgeText = {declared:"Declared", considering:"Considering", out:"Out"};
 let filter = "all", query = "";
 
+// Banana scale: 0 = far right ... 7 = far left (by political family, approximate)
+const BANANA_MAX = 7;
+const bananaScale = {"Far right":0,"Sovereignists":1,"Right":2,"Centre":3,"Social democrats":4,"Greens":5,"Left":6,"Far left":7};
+function bananas(g){
+  if(!(g in bananaScale)) return `<div class="nana" title="No place on the left–right scale"><span class="na">Left–right position: n/a</span></div>`;
+  const n = bananaScale[g];
+  return `<div class="nana" title="${n} of ${BANANA_MAX} bananas: ${g}" aria-label="${n} out of ${BANANA_MAX} bananas">` +
+    "🍌".repeat(n) + `<span class="ghost">` + "🍌".repeat(BANANA_MAX-n) + `</span></div>`;
+}
+
 function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 
 function renderTabs(){
@@ -169,10 +208,11 @@ function renderList(){
     if(!items.length) return;
     total += items.length;
     html += `<h2>${g.label} <small>${items.length} · ${g.note}</small></h2><div class="grid">` +
-      items.map(c=>`<article class="card">
+      items.map(c=>`<article class="card c-${c.s}">
         <span class="badge b-${c.s}">${badgeText[c.s]}</span>
         <h3>${esc(c.n)}</h3>
         <div class="party">${esc(c.p)} · ${esc(c.g)}</div>
+        ${bananas(c.g)}
         <p class="note">${esc(c.t)}</p></article>`).join("") + `</div>`;
   });
   document.getElementById("list").innerHTML = html || '<p class="empty">No candidates match your search.</p>';
