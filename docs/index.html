@@ -33,6 +33,13 @@
   .meta span{border:1px solid var(--line);border-radius:6px;padding:1px 8px;color:var(--muted)}
   .meta .sx.f{color:#ff9bd2;border-color:#7a3a62} .meta .sx.m{color:#8fc8ff;border-color:#2f5679}
   .meta .age{color:var(--ink)} .meta .age.na{color:var(--muted);font-style:italic}
+  .wpi{display:flex;align-items:center;gap:8px;font-size:.82rem;margin:2px 0}
+  .wpi .wlab{font-weight:600;color:#7fd8ff;white-space:nowrap}
+  .wpi .wbar{flex:1;min-width:50px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+  .wpi .wbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#4fa8ff,#7fffd4)}
+  .wpi .wnum{font-weight:700}
+  .wpi .wf{color:var(--muted);white-space:nowrap}
+  .wpi.na .wnum{color:var(--muted);font-weight:400}
   .hx{font-size:.82rem;margin:2px 0 0;line-height:1.35}
   .hx .hnote{color:var(--muted)}
   .hx.none,.hx.unk{color:var(--muted)}
@@ -103,6 +110,7 @@
   <div class="controls">
     <div class="tabs" id="tabs" role="group" aria-label="Filter by status"></div>
     <input type="search" id="q" placeholder="Search name or party…" aria-label="Search candidates">
+    <button class="tab" id="sortbtn" aria-pressed="false" title="Sort each group by World Popularity Index, highest first">🌍 Sort by WPI</button>
   </div>
   <div class="legend"><b>🍌 Banana scale:</b> the more bananas, the further left. 0 bananas = far right, 7 = far left. Based on each candidate's political family (far right → sovereignists → right → centre → social democrats → greens → left → far left), so it is an approximation, not a ranking of individuals. "Other" candidates have no place on the scale and get one big banana.</div>
   <div id="list"></div>
@@ -111,6 +119,7 @@
     <p><b>Notes.</b> This list is provisional. Only candidates who gather 500 valid sponsorships and are validated by the Constitutional Council will appear on the ballot (12 did in 2022). Presidents are limited to two consecutive terms, so Emmanuel Macron cannot run. Within each group, candidates are ordered roughly from left to right; order carries no other meaning.</p>
     <p><b>Age and sex.</b> Birth dates come from each person's English Wikipedia page, and ages are calculated from today's date when the page loads. For 11 minor or little-documented candidates I could not find a reliable birth date, so no age is shown. Sex is shown as presented in public sources and, for those minor candidates, inferred from first names and the press's grammatical forms.</p>
     <p><b>Children.</b> Numbers are as stated on each person's English Wikipedia page. "children n/a" means the page doesn't say, not that the person has none. *Xavier Bertrand's page gives 3 in the text and 5 in the infobox.</p>
+    <p><b>World Popularity Index (🌍 WPI).</b> A 0–100 score based only on the number of followers of a person's main account on X, on a logarithmic scale: WPI = 100 × log₁₀(followers ÷ 10,000) ÷ log₁₀(top account ÷ 10,000). Marine Le Pen has the most followers (about 3.05 million), so she sets 100. Followers come from <a href="https://www.qui-sera-president.fr/">qui-sera-president.fr</a>, which counts them automatically once a day (26 Oct 2026 here). The index is not a measure of real popularity: it ignores other platforms, includes inactive or purchased followers, counts people who follow in order to criticise, and says nothing about voters. Followers worldwide are counted, not just French voters. It also doesn't cover all candidates: the source tracks 25 of the 42 on this page, and the rest show "n/a", which says nothing about their popularity.</p>
     <p><b>Education (🎓).</b> 🎓 = bachelor-level or vocational diploma; 🎓🎓 = one master-level degree or a Sciences Po / grande école graduate; 🎓🎓🎓 = ENA, or two or more master-level or postgraduate degrees. "Not stated" means the Wikipedia page names no degree, not that the person has none. Where the page names only a school (for example Sciences Po), I counted it as graduating and said so in the hover text. This is a rough scale of level, not of quality.</p>
     <p><b>Years in politics (🏛️).</b> One 🏛️ per started decade, counted from the earliest political role, candidacy or office documented on each person's Wikipedia page (hover for the role). "≥" means the page gives only a later date, so the real figure may be higher. Journalism, business or union careers are not counted as politics. Hollande's start (1979) is approximate.</p>
     <p><b>Law and justice (handcuffs).</b> One cuff = investigated or subject of a complaint only; two = formally charged or tried, including cases ending in acquittal or dismissal; three = at least one conviction. Everyone is presumed innocent unless convicted, and an investigation or complaint is not a finding of guilt. Only matters involving the person themselves are counted, as stated on their Wikipedia page, so cases where they are the victim or plaintiff, or that concern relatives or their party, are left out. "None documented" means none appeared in those pages, which may lag behind recent developments. Please check current sources before relying on any entry.</p>
@@ -194,7 +203,7 @@ const groups = [
   {id:O, label:"Not running / eliminated", note:"Withdrew or lost a primary"}
 ];
 const badgeText = {declared:"Declared", considering:"Considering", out:"Out"};
-let filter = "all", query = "";
+let filter = "all", query = "", sortWpi = false;
 
 // Banana scale: 0 = far right ... 7 = far left (by political family, approximate)
 const BANANA_MAX = 7;
@@ -316,6 +325,29 @@ const legal = {
   "Dominique de Villepin":[2,"Tried in the Clearstream affair: acquitted in 2010 and again on appeal in 2011. Separately, per the page, an investigating judge asked for a Bouaké-attack case against him to go to the Court of Justice of the Republic; no outcome stated."],
   "Ségolène Royal":[1,"Around 2020: official investigation into alleged misuse of public funds during her time as ambassador. No outcome stated."]
 };
+// World Popularity Index (WPI): based only on followers of the person's main X account.
+// WPI = 100 × log10(followers / 10,000) ÷ log10(top followers / 10,000), floored at 0. Log scale, so one huge account doesn't flatten the rest.
+// Followers as published by qui-sera-president.fr (daily automatic count, 26 Oct 2026). Candidates it does not track have no WPI.
+const xf = {
+  "Marine Le Pen":3048882, "Jean-Luc Mélenchon":2714650, "François Hollande":2056630, "Édouard Philippe":942788,
+  "Éric Zemmour":575835, "Florian Philippot":522385, "Nicolas Dupont-Aignan":470178, "François Ruffin":444486,
+  "Juan Branco":421045, "François Asselineau":385152, "Raphaël Glucksmann":310376, "Gabriel Attal":290413,
+  "Bernard Cazeneuve":227682, "Natacha Polony":227651, "David Lisnard":221535, "Bruno Retailleau":215366,
+  "Xavier Bertrand":205122, "Dominique de Villepin":177570, "Marine Tondelier":137887, "Anasse Kazib":112904,
+  "Fabien Roussel":105186, "Delphine Batho":72773, "Nathalie Arthaud":51083, "Francis Lalanne":47010, "Karim Bouamrane":23374
+};
+const XF_MAX = Math.max(...Object.values(xf)), XF_BASE = 10000;
+function wpiOf(name){
+  const f = xf[name]; if(f===undefined) return null;
+  return Math.max(0, Math.round(100*Math.log10(f/XF_BASE)/Math.log10(XF_MAX/XF_BASE)));
+}
+function fmtF(f){ return f>=1e6 ? (f/1e6).toFixed(2)+"M" : f>=1e3 ? Math.round(f/1e3)+"k" : String(f); }
+function wpiLine(name){
+  const w = wpiOf(name);
+  if(w===null) return `<div class="wpi na" title="This account is not tracked by the source, so no index is computed (this says nothing about popularity)"><span class="wlab">🌍 WPI</span> <span class="wnum">n/a</span></div>`;
+  const f = xf[name];
+  return `<div class="wpi" title="${f.toLocaleString("en-US")} followers on X (26 Oct 2026)"><span class="wlab">🌍 WPI</span> <span class="wbar"><i style="width:${w}%"></i></span> <span class="wnum">${w}</span> <span class="wf">${fmtF(f)} on X</span></div>`;
+}
 function cuffs(n){
   const one = `<svg class="cuff" viewBox="0 0 30 16" width="24" height="13" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="8" r="5"/><circle cx="23" cy="8" r="5"/><path d="M12 8h6"/><path d="M7 3v2.5M23 3v2.5" stroke-width="1.4"/></g><circle cx="7" cy="8" r="1.2" fill="currentColor"/><circle cx="23" cy="8" r="1.2" fill="currentColor"/></svg>`;
   return one.repeat(n);
@@ -382,7 +414,8 @@ function renderList(){
   let html = "", total = 0;
   groups.forEach(g=>{
     if(filter!=="all" && filter!==g.id) return;
-    const items = candidates.filter(c=>c.s===g.id && match(c));
+    let items = candidates.filter(c=>c.s===g.id && match(c));
+    if(sortWpi) items = items.slice().sort((a,b)=>(wpiOf(b.n)??-1)-(wpiOf(a.n)??-1));
     if(!items.length) return;
     total += items.length;
     html += `<h2>${g.label} <small>${items.length} · ${g.note}</small></h2><div class="grid">` +
@@ -391,6 +424,7 @@ function renderList(){
         <h3>${esc(c.n)}</h3>
         <div class="party">${esc(c.p)} · ${esc(c.g)}</div>
         ${meta(c.n)}
+        ${wpiLine(c.n)}
         ${bananas(c.g)}
         ${eduLine(c.n)}
         ${polLine(c.n)}
@@ -401,6 +435,7 @@ function renderList(){
   document.getElementById("list").innerHTML = html || '<p class="empty">No candidates match your search.</p>';
 }
 
+document.getElementById("sortbtn").addEventListener("click",e=>{sortWpi=!sortWpi;e.currentTarget.setAttribute("aria-pressed",sortWpi);renderList();});
 document.getElementById("q").addEventListener("input",e=>{query=e.target.value;renderList();});
 document.getElementById("count-declared").textContent = candidates.filter(c=>c.s===D).length;
 renderTabs(); renderList();
