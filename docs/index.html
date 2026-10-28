@@ -29,6 +29,10 @@
   .card.c-considering h3::before{content:"👻 "}
   .card.c-out h3::before{content:"💀 "}
   h2{color:#ffb347}
+  .meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.8rem;margin:2px 0}
+  .meta span{border:1px solid var(--line);border-radius:6px;padding:1px 8px;color:var(--muted)}
+  .meta .sx.f{color:#ff9bd2;border-color:#7a3a62} .meta .sx.m{color:#8fc8ff;border-color:#2f5679}
+  .meta .age{color:var(--ink)} .meta .age.na{color:var(--muted);font-style:italic}
   .nana{font-size:1.05rem;letter-spacing:1px;line-height:1.2;margin:2px 0}
   .nana .ghost{filter:grayscale(1);opacity:.18}
   .nana .big{font-size:2rem;line-height:1}
@@ -97,7 +101,8 @@
 
   <footer>
     <p><b>Notes.</b> This list is provisional. Only candidates who gather 500 valid sponsorships and are validated by the Constitutional Council will appear on the ballot (12 did in 2022). Presidents are limited to two consecutive terms, so Emmanuel Macron cannot run. Within each group, candidates are ordered roughly from left to right; order carries no other meaning.</p>
-    <p>Sources (checked 26–27 Oct 2026):</p>
+    <p><b>Age and sex.</b> Birth dates come from each person's English Wikipedia page, and ages are calculated from today's date when the page loads. For 11 minor or little-documented candidates I could not find a reliable birth date, so no age is shown. Sex is shown as presented in public sources and, for those minor candidates, inferred from first names and the press's grammatical forms.</p>
+    <p>Sources (checked 26–28 Oct 2026):</p>
     <ul>
       <li><a href="https://www.france-vote.fr/candidats">France-Vote – Les candidats à la présidentielle 2027</a></li>
       <li><a href="https://www.publicsenat.fr/actualites/politique/election-presidentielle-2027-qui-sont-les-candidats-declares-ou-presque">Public Sénat – Candidats déclarés ou presque</a></li>
@@ -188,6 +193,40 @@ function bananas(g){
     "🍌".repeat(n) + `<span class="ghost">` + "🍌".repeat(BANANA_MAX-n) + `</span></div>`;
 }
 
+// Date of birth (from Wikipedia) and sex. Age is computed when the page loads.
+// Birth date left null where I could not find a reliable source.
+const info = {
+  "Nathalie Arthaud":["1970-02-23","F"], "Anasse Kazib":["1987-01-02","M"], "Selma Labib":[null,"F"],
+  "Jean-Luc Mélenchon":["1951-08-19","M"], "Fabien Roussel":["1969-04-16","M"], "François Ruffin":["1975-10-18","M"],
+  "Juan Branco":[null,"M"], "Marine Tondelier":["1986-08-23","F"], "Delphine Batho":["1973-03-23","F"],
+  "Raphaël Glucksmann":["1979-10-15","M"], "Bernard Cazeneuve":["1963-06-02","M"], "Karim Bouamrane":["1973-02-21","M"],
+  "Gabriel Attal":["1989-03-16","M"], "Édouard Philippe":["1970-11-28","M"], "Olivier Becht":[null,"M"],
+  "Xavier Bertrand":["1965-03-21","M"], "David Lisnard":["1969-02-02","M"], "Bruno Retailleau":["1960-11-20","M"],
+  "Nicolas Dupont-Aignan":["1961-03-07","M"], "François Asselineau":["1957-09-14","M"], "Florian Philippot":["1981-10-24","M"],
+  "Natacha Polony":["1975-04-15","F"], "Marine Le Pen":["1968-08-05","F"], "Éric Zemmour":["1958-08-31","M"],
+  "Mira Markovic":[null,"F"], "Francis Lalanne":["1958-08-08","M"], "Antoine Mikolajczak":[null,"M"],
+  "Clara Egger":[null,"F"], "Manolo Mlekuz":[null,"M"], "Benoît Mathieu":[null,"M"],
+  "Jean-François Legendre":[null,"M"], "Sylvain Durif":[null,"M"],
+  "Dominique de Villepin":["1953-11-14","M"], "François Hollande":["1954-08-12","M"], "Bruno Le Maire":["1969-04-15","M"],
+  "Jean Lassalle":["1955-05-03","M"], "Olivier Faure":["1968-08-18","M"], "Ségolène Royal":["1953-09-22","F"],
+  "Emmanuel Maurel":["1973-05-10","M"], "Jérôme Guedj":["1972-01-23","M"], "Philippe Brun":[null,"M"],
+  "Clémentine Autain":["1973-05-26","F"]
+};
+function ageOf(iso){
+  if(!iso) return null;
+  const b = new Date(iso+"T00:00:00"), t = new Date();
+  let a = t.getFullYear()-b.getFullYear();
+  if(t.getMonth()<b.getMonth() || (t.getMonth()===b.getMonth() && t.getDate()<b.getDate())) a--;
+  return a;
+}
+function meta(name){
+  const i = info[name]; if(!i) return "";
+  const a = ageOf(i[0]);
+  const sex = i[1]==="F" ? `<span class="sx f" title="Woman">♀ Woman</span>` : `<span class="sx m" title="Man">♂ Man</span>`;
+  const age = a===null ? `<span class="age na" title="Birth date not found in a reliable source">age n/a</span>` : `<span class="age">${a} years old</span>`;
+  return `<div class="meta">${sex}${age}</div>`;
+}
+
 function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 
 function renderTabs(){
@@ -212,6 +251,7 @@ function renderList(){
         <span class="badge b-${c.s}">${badgeText[c.s]}</span>
         <h3>${esc(c.n)}</h3>
         <div class="party">${esc(c.p)} · ${esc(c.g)}</div>
+        ${meta(c.n)}
         ${bananas(c.g)}
         <p class="note">${esc(c.t)}</p></article>`).join("") + `</div>`;
   });
