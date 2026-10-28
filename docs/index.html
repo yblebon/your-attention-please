@@ -37,6 +37,8 @@
   .wpi .wlab{font-weight:600;color:#7fd8ff;white-space:nowrap}
   .wpi .wbar{flex:1;min-width:50px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
   .wpi .wbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#4fa8ff,#7fffd4)}
+  .wpi .wlab.ei{color:#ffd166}
+  .wpi .wbar.ei i{background:linear-gradient(90deg,#ff9f1c,#ffe066)}
   .wpi .wnum{font-weight:700}
   .wpi .wf{color:var(--muted);white-space:nowrap}
   .wpi.na .wnum{color:var(--muted);font-weight:400}
@@ -120,6 +122,7 @@
     <p><b>Age and sex.</b> Birth dates come from each person's English Wikipedia page, and ages are calculated from today's date when the page loads. For 11 minor or little-documented candidates I could not find a reliable birth date, so no age is shown. Sex is shown as presented in public sources and, for those minor candidates, inferred from first names and the press's grammatical forms.</p>
     <p><b>Children.</b> Numbers are as stated on each person's English Wikipedia page. "children n/a" means the page doesn't say, not that the person has none. *Xavier Bertrand's page gives 3 in the text and 5 in the infobox.</p>
     <p><b>World Popularity Index (🌍 WPI).</b> A 0–100 score based only on the number of followers of a person's main account on X, on a logarithmic scale: WPI = 100 × log₁₀(followers ÷ 10,000) ÷ log₁₀(top account ÷ 10,000). Marine Le Pen has the most followers (about 3.05 million), so she sets 100. Followers come from <a href="https://www.qui-sera-president.fr/">qui-sera-president.fr</a>, which counts them automatically once a day (26 Oct 2026 here). The index is not a measure of real popularity: it ignores other platforms, includes inactive or purchased followers, counts people who follow in order to criticise, and says nothing about voters. Followers worldwide are counted, not just French voters. It also doesn't cover all candidates: the source tracks 25 of the 42 on this page, and the rest show "n/a", which says nothing about their popularity.</p>
+    <p><b>Entrepreneurial Index (💼 EI).</b> A 0–100 score for business experience, built from what each person's English Wikipedia page says. Points add up across categories and are capped at 100: founding a clearly commercial business = 55; founding a publication or venture whose legal or commercial form isn't stated = 35; an executive or management role in a private organisation (director, general manager, chair, editor-in-chief, manager) = 30; salaried private-sector work, including lawyers and journalists at private outlets = 15. Public-sector jobs, parties, unions, associations and elected office don't count. A 0 means nothing was documented on that page, not that the person has no business experience: Wikipedia is thin on this (for example, David Lisnard's page lists him as a "businessman" but names no company, and François Asselineau's page mentions a 1989–90 role at SADEF without saying whether it was a private company). The rubric is my own, so treat it as a rough guide and not a measurement of ability to govern.</p>
     <p><b>Education (🎓).</b> 🎓 = bachelor-level or vocational diploma; 🎓🎓 = one master-level degree or a Sciences Po / grande école graduate; 🎓🎓🎓 = ENA, or two or more master-level or postgraduate degrees. "Not stated" means the Wikipedia page names no degree, not that the person has none. Where the page names only a school (for example Sciences Po), I counted it as graduating and said so in the hover text. This is a rough scale of level, not of quality.</p>
     <p><b>Years in politics (🏛️).</b> One 🏛️ per started decade, counted from the earliest political role, candidacy or office documented on each person's Wikipedia page (hover for the role). "≥" means the page gives only a later date, so the real figure may be higher. Journalism, business or union careers are not counted as politics. Hollande's start (1979) is approximate.</p>
     <p><b>Law and justice (handcuffs).</b> One cuff = investigated or subject of a complaint only; two = formally charged or tried, including cases ending in acquittal or dismissal; three = at least one conviction. Everyone is presumed innocent unless convicted, and an investigation or complaint is not a finding of guilt. Only matters involving the person themselves are counted, as stated on their Wikipedia page, so cases where they are the victim or plaintiff, or that concern relatives or their party, are left out. "None documented" means none appeared in those pages, which may lag behind recent developments. Please check current sources before relying on any entry.</p>
@@ -348,6 +351,33 @@ function wpiLine(name){
   const f = xf[name];
   return `<div class="wpi" title="${f.toLocaleString("en-US")} followers on X (26 Oct 2026)"><span class="wlab">🌍 WPI</span> <span class="wbar"><i style="width:${w}%"></i></span> <span class="wnum">${w}</span> <span class="wf">${fmtF(f)} on X</span></div>`;
 }
+// Entrepreneurial Index (EI), 0–100, from business experience stated on each person's English Wikipedia page.
+// Points add up across categories, capped at 100:
+//   founded a clearly commercial business: 55  |  founded a publication/venture whose legal or commercial form isn't stated: 35
+//   executive or management role in a private organisation (director, general manager, chair, editor-in-chief, manager): 30
+//   salaried private-sector work (employee, lawyer, journalist at a private outlet): 15
+// Public-sector jobs, parties, unions, associations and elected office do not count. 0 means none documented, not "none".
+const ent = {
+  "Jean-Luc Mélenchon":[0,"Teacher, then politics: no private-sector business experience documented."],
+  "Anasse Kazib":[15,"Worked as a courier for chemical laboratories before joining the railway (salaried, private sector)."],
+  "François Ruffin":[35,"Founded the newspaper Fakir in 1999 and edits it. The page does not say what legal or commercial form it has."],
+  "Bernard Cazeneuve":[15,"Lawyer in private practice, per the page (no founder or executive role stated)."],
+  "Édouard Philippe":[45,"Director of Public Affairs at Areva (2007–2010) and lawyer at Debevoise & Plimpton."],
+  "Xavier Bertrand":[15,"Began as an insurance agent (salaried)."],
+  "Bruno Retailleau":[30,"Deputy general manager of local radio Alouette (from 1985), general manager of the Sciencescom communication school (1987–94) and first chairman of the Puy du Fou park company. Founder role not stated."],
+  "Natacha Polony":[80,"Editor-in-chief of Marianne (2018–2025), long-time journalist (Marianne, Le Figaro), and founded the journal L'Audace in 2025. Its legal form is not stated."],
+  "Marine Le Pen":[15,"Practised as a lawyer in Paris, 1992–1998."],
+  "Éric Zemmour":[15,"Journalist for private media (Le Quotidien de Paris, Le Figaro, RTL, CNews). Founded the party Reconquête, which does not count."],
+  "Dominique de Villepin":[100,"Opened a commercial art gallery in Hong Kong with his son (2020); president of the advisory board of Universal Credit Rating Group; runs a legal and consulting practice advising firms such as Alstom, TotalEnergies and Veolia, plus investor and bank advisory roles."],
+  "Olivier Faure":[30,"Chief executive of a business with 150 employees, 1993–1997. The page doesn't name it or say whether he founded it."],
+  "Jérôme Guedj":[85,"Founded a consulting firm in 2018 and is manager of J G Conseils (established 2006, consulting for local authorities, associations and businesses)."]
+};
+function eiLine(name){
+  const i = info[name];
+  if(i && i[0]===null) return `<div class="wpi na" title="Not checked: little public documentation on this candidate"><span class="wlab ei">💼 EI</span> <span class="wnum">not checked</span></div>`;
+  const e = ent[name] || [0,"No private-sector business experience documented on the page."];
+  return `<div class="wpi" title="${esc(e[1])}"><span class="wlab ei">💼 EI</span> <span class="wbar ei"><i style="width:${e[0]}%"></i></span> <span class="wnum">${e[0]}</span></div>`;
+}
 function cuffs(n){
   const one = `<svg class="cuff" viewBox="0 0 30 16" width="24" height="13" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="8" r="5"/><circle cx="23" cy="8" r="5"/><path d="M12 8h6"/><path d="M7 3v2.5M23 3v2.5" stroke-width="1.4"/></g><circle cx="7" cy="8" r="1.2" fill="currentColor"/><circle cx="23" cy="8" r="1.2" fill="currentColor"/></svg>`;
   return one.repeat(n);
@@ -425,6 +455,7 @@ function renderList(){
         <div class="party">${esc(c.p)} · ${esc(c.g)}</div>
         ${meta(c.n)}
         ${wpiLine(c.n)}
+        ${eiLine(c.n)}
         ${bananas(c.g)}
         ${eduLine(c.n)}
         ${polLine(c.n)}
