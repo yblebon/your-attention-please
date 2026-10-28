@@ -33,6 +33,11 @@
   .meta span{border:1px solid var(--line);border-radius:6px;padding:1px 8px;color:var(--muted)}
   .meta .sx.f{color:#ff9bd2;border-color:#7a3a62} .meta .sx.m{color:#8fc8ff;border-color:#2f5679}
   .meta .age{color:var(--ink)} .meta .age.na{color:var(--muted);font-style:italic}
+  .hx{font-size:.82rem;margin:2px 0 0;line-height:1.35}
+  .hx .hnote{color:var(--muted)}
+  .hx.none,.hx.unk{color:var(--muted)}
+  .hx .ghostv{filter:grayscale(1);opacity:.35}
+  .hx.unk{font-style:italic}
   .nana{font-size:1.05rem;letter-spacing:1px;line-height:1.2;margin:2px 0}
   .nana .ghost{filter:grayscale(1);opacity:.18}
   .nana .big{font-size:2rem;line-height:1}
@@ -102,6 +107,8 @@
   <footer>
     <p><b>Notes.</b> This list is provisional. Only candidates who gather 500 valid sponsorships and are validated by the Constitutional Council will appear on the ballot (12 did in 2022). Presidents are limited to two consecutive terms, so Emmanuel Macron cannot run. Within each group, candidates are ordered roughly from left to right; order carries no other meaning.</p>
     <p><b>Age and sex.</b> Birth dates come from each person's English Wikipedia page, and ages are calculated from today's date when the page loads. For 11 minor or little-documented candidates I could not find a reliable birth date, so no age is shown. Sex is shown as presented in public sources and, for those minor candidates, inferred from first names and the press's grammatical forms.</p>
+    <p><b>Children.</b> Numbers are as stated on each person's English Wikipedia page. "children n/a" means the page doesn't say, not that the person has none. *Xavier Bertrand's page gives 3 in the text and 5 in the infobox.</p>
+    <p><b>Health notes (🦠).</b> One 🦠 per health condition that the person has publicly disclosed or that major outlets have reported. "None documented" means nothing turned up in the pages I checked, not that the person is in good health. Candidates marked "not checked" are minor candidates with too little public documentation. Family members' health and speculation are excluded.</p>
     <p>Sources (checked 26–28 Oct 2026):</p>
     <ul>
       <li><a href="https://www.france-vote.fr/candidats">France-Vote – Les candidats à la présidentielle 2027</a></li>
@@ -212,6 +219,27 @@ const info = {
   "Emmanuel Maurel":["1973-05-10","M"], "Jérôme Guedj":["1972-01-23","M"], "Philippe Brun":[null,"M"],
   "Clémentine Autain":["1973-05-26","F"]
 };
+// Number of children, as stated on English Wikipedia. Missing = not stated (not the same as zero).
+const kids = {
+  "Anasse Kazib":2, "Jean-Luc Mélenchon":1, "Marine Tondelier":1, "Raphaël Glucksmann":2, "Bernard Cazeneuve":2,
+  "Karim Bouamrane":3, "Édouard Philippe":3, "Xavier Bertrand":"3–5", "David Lisnard":3, "Bruno Retailleau":3,
+  "Nicolas Dupont-Aignan":2, "Marine Le Pen":3, "Éric Zemmour":3, "Dominique de Villepin":3, "François Hollande":4,
+  "Bruno Le Maire":4, "Ségolène Royal":4, "Clémentine Autain":2
+};
+// Health: only conditions the person has publicly disclosed, or that major outlets have reported, found on
+// English Wikipedia (plus press confirmation for Philippe). One 🦠 per documented condition.
+// Anyone not listed here had nothing documented in the pages I checked, which is not proof of good health.
+const health = {
+  "Édouard Philippe": {n:2, note:"Vitiligo (disclosed 2020) and alopecia areata (disclosed 2023). Both are autoimmune skin and hair conditions, self-disclosed."},
+  "François Asselineau": {n:1, note:"Tested positive for COVID-19 in July 2021, as reported by the press. Not clear whether he disclosed it himself."}
+};
+function healthLine(name){
+  const i = info[name];
+  if(i && i[0]===null) return `<div class="hx unk" title="Not checked: little public documentation on this candidate">🦠 health: not checked</div>`;
+  const h = health[name];
+  if(!h) return `<div class="hx none" title="Nothing documented in the sources I checked. This is not proof of good health."><span class="ghostv">🦠</span> none documented</div>`;
+  return `<div class="hx" title="${esc(h.note)}">${"🦠".repeat(h.n)} <span class="hnote">${esc(h.note)}</span></div>`;
+}
 function ageOf(iso){
   if(!iso) return null;
   const b = new Date(iso+"T00:00:00"), t = new Date();
@@ -224,7 +252,11 @@ function meta(name){
   const a = ageOf(i[0]);
   const sex = i[1]==="F" ? `<span class="sx f" title="Woman">♀ Woman</span>` : `<span class="sx m" title="Man">♂ Man</span>`;
   const age = a===null ? `<span class="age na" title="Birth date not found in a reliable source">age n/a</span>` : `<span class="age">${a} years old</span>`;
-  return `<div class="meta">${sex}${age}</div>`;
+  const k = kids[name];
+  const kt = k===undefined ? `<span class="age na" title="Not stated in the sources I checked (this does not mean none)">children n/a</span>`
+    : k==="3–5" ? `<span class="age" title="English Wikipedia gives conflicting figures: 3 in the text, 5 in the infobox">👶 3–5 children*</span>`
+    : `<span class="age">👶 ${k} ${k===1?"child":"children"}</span>`;
+  return `<div class="meta">${sex}${age}${kt}</div>`;
 }
 
 function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
@@ -253,6 +285,7 @@ function renderList(){
         <div class="party">${esc(c.p)} · ${esc(c.g)}</div>
         ${meta(c.n)}
         ${bananas(c.g)}
+        ${healthLine(c.n)}
         <p class="note">${esc(c.t)}</p></article>`).join("") + `</div>`;
   });
   document.getElementById("list").innerHTML = html || '<p class="empty">No candidates match your search.</p>';
