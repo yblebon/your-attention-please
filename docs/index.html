@@ -108,6 +108,8 @@
     <p><b>Notes.</b> This list is provisional. Only candidates who gather 500 valid sponsorships and are validated by the Constitutional Council will appear on the ballot (12 did in 2022). Presidents are limited to two consecutive terms, so Emmanuel Macron cannot run. Within each group, candidates are ordered roughly from left to right; order carries no other meaning.</p>
     <p><b>Age and sex.</b> Birth dates come from each person's English Wikipedia page, and ages are calculated from today's date when the page loads. For 11 minor or little-documented candidates I could not find a reliable birth date, so no age is shown. Sex is shown as presented in public sources and, for those minor candidates, inferred from first names and the press's grammatical forms.</p>
     <p><b>Children.</b> Numbers are as stated on each person's English Wikipedia page. "children n/a" means the page doesn't say, not that the person has none. *Xavier Bertrand's page gives 3 in the text and 5 in the infobox.</p>
+    <p><b>Education (🎓).</b> 🎓 = bachelor-level or vocational diploma; 🎓🎓 = one master-level degree or a Sciences Po / grande école graduate; 🎓🎓🎓 = ENA, or two or more master-level or postgraduate degrees. "Not stated" means the Wikipedia page names no degree, not that the person has none. Where the page names only a school (for example Sciences Po), I counted it as graduating and said so in the hover text. This is a rough scale of level, not of quality.</p>
+    <p><b>Years in politics (🏛️).</b> One 🏛️ per started decade, counted from the earliest political role, candidacy or office documented on each person's Wikipedia page (hover for the role). "≥" means the page gives only a later date, so the real figure may be higher. Journalism, business or union careers are not counted as politics. Hollande's start (1979) is approximate.</p>
     <p><b>Health notes (🦠).</b> One 🦠 per health condition that the person has publicly disclosed or that major outlets have reported. "None documented" means nothing turned up in the pages I checked, not that the person is in good health. Candidates marked "not checked" are minor candidates with too little public documentation. Family members' health and speculation are excluded.</p>
     <p>Sources (checked 26–28 Oct 2026):</p>
     <ul>
@@ -233,6 +235,82 @@ const health = {
   "Édouard Philippe": {n:2, note:"Vitiligo (disclosed 2020) and alopecia areata (disclosed 2023). Both are autoimmune skin and hair conditions, self-disclosed."},
   "François Asselineau": {n:1, note:"Tested positive for COVID-19 in July 2021, as reported by the press. Not clear whether he disclosed it himself."}
 };
+// Education (🎓): 1 = bachelor-level or vocational diploma, 2 = one master-level degree or Sciences Po / grande école graduate,
+// 3 = ENA, or two or more master-level / postgraduate degrees. Missing = no degree stated on the page (not "no degree").
+const edu = {
+  "Jean-Luc Mélenchon":[1,"BA in philosophy, Franche-Comté (1972)"],
+  "Fabien Roussel":[1,"Journalism training, CPJ"],
+  "Marine Tondelier":[2,"Master's in healthcare management, Sciences Po Lille (2009)"],
+  "Raphaël Glucksmann":[2,"Sciences Po (school listed; degree not named)"],
+  "Bernard Cazeneuve":[2,"IEP Bordeaux (school listed; degree not named)"],
+  "Gabriel Attal":[2,"Master of Public Affairs, Sciences Po (2012)"],
+  "Édouard Philippe":[3,"Sciences Po (1992) and ENA (1995–97)"],
+  "Xavier Bertrand":[3,"DESS in local administration and a master's in public law, Reims"],
+  "David Lisnard":[2,"Master's in public law, IEP Bordeaux / Paris-Panthéon-Assas"],
+  "Bruno Retailleau":[3,"Master's in economics (Nantes) and Sciences Po (1985)"],
+  "Nicolas Dupont-Aignan":[3,"Postgraduate degree (Dauphine), law degree, Sciences Po, ENA (1987–89)"],
+  "François Asselineau":[3,"MSc in Management, HEC Paris (1980), then ENA"],
+  "Florian Philippot":[3,"HEC Paris and ENA"],
+  "Natacha Polony":[2,"Sciences Po (2002)"],
+  "Marine Le Pen":[3,"LLM (1991) and DEA in criminal law (1992), Panthéon-Assas"],
+  "Éric Zemmour":[2,"Sciences Po (1979)"],
+  "Dominique de Villepin":[3,"Law and literature degrees, Sciences Po, ENA"],
+  "François Hollande":[3,"Law degree and ENA (1980)"],
+  "Bruno Le Maire":[3,"Sciences Po (1995) and ENA (from 1996)"],
+  "Olivier Faure":[3,"Two Master of Advanced Studies degrees (political science, economic law)"],
+  "Ségolène Royal":[3,"ENA, plus an economics degree"],
+  "Emmanuel Maurel":[2,"Sciences Po (school listed; degree not named)"],
+  "Jérôme Guedj":[3,"Sciences Po (1992) and ENA (1996)"],
+  "Clémentine Autain":[2,"DEA in history, Paris 8 (after a maîtrise)"]
+};
+// Years in politics: since the earliest documented political role, candidacy or office, per Wikipedia.
+// atLeast = true where the page only gives a later date (earlier activity may exist but is undated there).
+const pol = {
+  "Nathalie Arthaud":[2001,0,"first candidacy (municipal election)"],
+  "Anasse Kazib":[2017,0,"joined a revolutionary communist faction"],
+  "Jean-Luc Mélenchon":[1972,0,"joined the Internationalist Communist Organisation (first elected 1983)"],
+  "Fabien Roussel":[2017,1,"first elected as an MP; earlier activity is undated on the page"],
+  "François Ruffin":[2017,0,"elected MP"],
+  "Marine Tondelier":[2009,0,"first candidacy (Hénin-Beaumont)"],
+  "Delphine Batho":[2007,1,"first MP term; no earlier office dated on the page"],
+  "Raphaël Glucksmann":[2006,0,"party affiliation (first elected as MEP in 2019)"],
+  "Bernard Cazeneuve":[1990,0,"Socialist Party member (first elected 1994)"],
+  "Karim Bouamrane":[1995,0,"municipal councillor, Saint-Ouen"],
+  "Gabriel Attal":[2014,1,"first elected (Vanves councillor); earlier activity undated"],
+  "Édouard Philippe":[1990,0,"Socialist Party member 1990–92 (first elected 2004)"],
+  "Xavier Bertrand":[1981,0,"volunteered for the RPR at 16 (first elected 1998)"],
+  "David Lisnard":[1996,0,"joined the RPR (first elected 2001)"],
+  "Bruno Retailleau":[1988,0,"general councillor, Vendée"],
+  "Nicolas Dupont-Aignan":[1974,0,"campaigned for Chaban-Delmas as an RPR youth (first elected 1995)"],
+  "François Asselineau":[1999,0,"joined the RPF (first elected 2001)"],
+  "Florian Philippot":[2011,1,"strategic director of Marine Le Pen's 2012 campaign; earlier activity undated"],
+  "Natacha Polony":[2002,0,"backed Chevènement and ran in the legislative election"],
+  "Marine Le Pen":[1986,0,"joined the National Front (first elected 1998)"],
+  "Éric Zemmour":[2021,0,"founded Reconquête; career before that was in journalism"],
+  "Francis Lalanne":[2019,1,"earliest dated role is a 2019 European election list; says he ran several times before"],
+  "Dominique de Villepin":[1977,0,"RPR member"],
+  "François Hollande":[1979,0,"joined the Socialist Party (about 5 years after the 1974 Mitterrand campaign; first elected 1983)"],
+  "Bruno Le Maire":[2007,1,"first elected as MP; earlier activity not on the page"],
+  "Jean Lassalle":[1977,0,"mayor of Lourdios-Ichère"],
+  "Olivier Faure":[1991,0,"secretary-general of the Young Rocardiens (first elected 2012)"],
+  "Ségolène Royal":[1982,0,"staff of President Mitterrand (first elected 1988)"],
+  "Emmanuel Maurel":[2011,1,"earliest dated activity on the page (first elected 2014)"],
+  "Jérôme Guedj":[1997,0,"substitute (suppléant) deputy; first elected 1998"],
+  "Clémentine Autain":[2001,0,"elected to the Council of Paris"]
+};
+function eduLine(name){
+  const e = edu[name];
+  if(!e) return `<div class="hx none" title="No degree stated on the Wikipedia page (this does not mean none)"><span class="ghostv">🎓</span> degree: not stated</div>`;
+  return `<div class="hx" title="${esc(e[1])}">${"🎓".repeat(e[0])} <span class="hnote">${esc(e[1])}</span></div>`;
+}
+function polLine(name){
+  const p = pol[name];
+  if(!p) return `<div class="hx none" title="Not checked or not documented"><span class="ghostv">🏛️</span> years in politics: n/a</div>`;
+  const yrs = new Date().getFullYear() - p[0];
+  const n = Math.min(6, Math.max(1, Math.ceil(yrs/10)));
+  const lbl = (p[1] ? "≥ " : "") + yrs + " years";
+  return `<div class="hx" title="${esc("Since "+p[0]+": "+p[2])}">${"🏛️".repeat(n)} <span class="hnote">${lbl} (since ${p[0]})</span></div>`;
+}
 function healthLine(name){
   const i = info[name];
   if(i && i[0]===null) return `<div class="hx unk" title="Not checked: little public documentation on this candidate">🦠 health: not checked</div>`;
@@ -285,6 +363,8 @@ function renderList(){
         <div class="party">${esc(c.p)} · ${esc(c.g)}</div>
         ${meta(c.n)}
         ${bananas(c.g)}
+        ${eduLine(c.n)}
+        ${polLine(c.n)}
         ${healthLine(c.n)}
         <p class="note">${esc(c.t)}</p></article>`).join("") + `</div>`;
   });
