@@ -38,6 +38,9 @@
   .hx.none,.hx.unk{color:var(--muted)}
   .hx .ghostv{filter:grayscale(1);opacity:.35}
   .hx.unk{font-style:italic}
+  .cuff{color:#ff4fa3;display:inline-flex;gap:2px;vertical-align:middle;filter:drop-shadow(0 0 3px rgba(255,79,163,.6))}
+  .cuff.g{color:var(--muted);filter:none;opacity:.4}
+  .cuff svg{display:block}
   .nana{font-size:1.05rem;letter-spacing:1px;line-height:1.2;margin:2px 0}
   .nana .ghost{filter:grayscale(1);opacity:.18}
   .nana .big{font-size:2rem;line-height:1}
@@ -110,6 +113,7 @@
     <p><b>Children.</b> Numbers are as stated on each person's English Wikipedia page. "children n/a" means the page doesn't say, not that the person has none. *Xavier Bertrand's page gives 3 in the text and 5 in the infobox.</p>
     <p><b>Education (🎓).</b> 🎓 = bachelor-level or vocational diploma; 🎓🎓 = one master-level degree or a Sciences Po / grande école graduate; 🎓🎓🎓 = ENA, or two or more master-level or postgraduate degrees. "Not stated" means the Wikipedia page names no degree, not that the person has none. Where the page names only a school (for example Sciences Po), I counted it as graduating and said so in the hover text. This is a rough scale of level, not of quality.</p>
     <p><b>Years in politics (🏛️).</b> One 🏛️ per started decade, counted from the earliest political role, candidacy or office documented on each person's Wikipedia page (hover for the role). "≥" means the page gives only a later date, so the real figure may be higher. Journalism, business or union careers are not counted as politics. Hollande's start (1979) is approximate.</p>
+    <p><b>Law and justice (handcuffs).</b> One cuff = investigated or subject of a complaint only; two = formally charged or tried, including cases ending in acquittal or dismissal; three = at least one conviction. Everyone is presumed innocent unless convicted, and an investigation or complaint is not a finding of guilt. Only matters involving the person themselves are counted, as stated on their Wikipedia page, so cases where they are the victim or plaintiff, or that concern relatives or their party, are left out. "None documented" means none appeared in those pages, which may lag behind recent developments. Please check current sources before relying on any entry.</p>
     <p><b>Health notes (🦠).</b> One 🦠 per health condition that the person has publicly disclosed or that major outlets have reported. "None documented" means nothing turned up in the pages I checked, not that the person is in good health. Candidates marked "not checked" are minor candidates with too little public documentation. Family members' health and speculation are excluded.</p>
     <p>Sources (checked 26–28 Oct 2026):</p>
     <ul>
@@ -298,6 +302,31 @@ const pol = {
   "Jérôme Guedj":[1997,0,"substitute (suppléant) deputy; first elected 1998"],
   "Clémentine Autain":[2001,0,"elected to the Council of Paris"]
 };
+// Law and justice (handcuffs): 1 = investigation or complaint only, 2 = formally charged or tried (including acquitted or dismissed),
+// 3 = at least one conviction. Only matters involving the person themselves, as stated on Wikipedia (plus press for Le Pen's appeal).
+// Not counted: cases where the person is the plaintiff or victim, or that only touch their relatives or party.
+const legal = {
+  "Anasse Kazib":[2,"2022: summoned over an undeclared demonstration. Since Oct 2023: investigated, then due to stand trial (2025) for 'apologie du terrorisme' over social-media posts. No verdict stated on the page."],
+  "Jean-Luc Mélenchon":[3,"Convicted in Dec 2019 (rebellion and provocation: 3 months suspended; intimidation of officials: €8,000 fine plus 3 months suspended) and in Sept 2021 (public defamation)."],
+  "Édouard Philippe":[1,"As mayor of Le Havre: preliminary probe (2023–24) and a national financial prosecutor's investigation (from 2024; investigating judge appointed in 2026) into suspected favouritism and misuse of public funds; a financial-markets authority probe in 2026. No charge or conviction is stated."],
+  "François Asselineau":[2,"2020 complaints alleging sexual harassment/assault; placed under formal investigation in 2021 (he denies it); charges dismissed Dec 2024; Paris Court of Appeal ordered a trial in May 2026. No verdict yet."],
+  "Marine Le Pen":[3,"Convicted in 2014 (electoral fraud, €10,000), 2023 (defamation, €500) and 31 Mar 2025 (EU-funds embezzlement), the last upheld on appeal on 7 Jul 2026 with her ineligibility reduced; she is appealing to the Cour de cassation. Acquitted in 2015 (incitement to hatred)."],
+  "Éric Zemmour":[3,"Several convictions for incitement to hatred or discrimination (2011, 2018–19, 2022, 2025), alongside several acquittals and an overturned conviction."],
+  "Francis Lalanne":[1,"2021: investigated over an op-ed said to provoke attacks on the nation's fundamental interests. No outcome stated."],
+  "Dominique de Villepin":[2,"Tried in the Clearstream affair: acquitted in 2010 and again on appeal in 2011. Separately, per the page, an investigating judge asked for a Bouaké-attack case against him to go to the Court of Justice of the Republic; no outcome stated."],
+  "Ségolène Royal":[1,"Around 2020: official investigation into alleged misuse of public funds during her time as ambassador. No outcome stated."]
+};
+function cuffs(n){
+  const one = `<svg class="cuff" viewBox="0 0 30 16" width="24" height="13" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="8" r="5"/><circle cx="23" cy="8" r="5"/><path d="M12 8h6"/><path d="M7 3v2.5M23 3v2.5" stroke-width="1.4"/></g><circle cx="7" cy="8" r="1.2" fill="currentColor"/><circle cx="23" cy="8" r="1.2" fill="currentColor"/></svg>`;
+  return one.repeat(n);
+}
+function legalLine(name){
+  const i = info[name];
+  if(i && i[0]===null) return `<div class="hx unk" title="Not checked: little public documentation on this candidate"><span class="cuff g">${cuffs(1)}</span> law &amp; justice: not checked</div>`;
+  const l = legal[name];
+  if(!l) return `<div class="hx none" title="Nothing documented in the sources I checked"><span class="cuff g">${cuffs(1)}</span> none documented</div>`;
+  return `<div class="hx" title="${esc(l[1])}"><span class="cuff">${cuffs(l[0])}</span> <span class="hnote">${esc(l[1])}</span></div>`;
+}
 function eduLine(name){
   const e = edu[name];
   if(!e) return `<div class="hx none" title="No degree stated on the Wikipedia page (this does not mean none)"><span class="ghostv">🎓</span> degree: not stated</div>`;
@@ -365,6 +394,7 @@ function renderList(){
         ${bananas(c.g)}
         ${eduLine(c.n)}
         ${polLine(c.n)}
+        ${legalLine(c.n)}
         ${healthLine(c.n)}
         <p class="note">${esc(c.t)}</p></article>`).join("") + `</div>`;
   });
