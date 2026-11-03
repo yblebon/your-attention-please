@@ -23,6 +23,20 @@
         "Bruno Retailleau",
         "Natacha Polony"
       ]
+    },
+    {
+      "id": "vigo",
+      "label": "Rúa da Pescadería",
+      "note": "La justice à deux vitesses",
+      "candidates": [
+        "Marine Le Pen",
+        "François Asselineau",
+        "Édouard Philippe",
+        "Jean-Luc Mélenchon",
+        "Anasse Kazib",
+        "Éric Zemmour",
+        "Francis Lalanne"
+      ]
     }
   ]
 }
