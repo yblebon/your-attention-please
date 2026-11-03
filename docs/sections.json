@@ -11,6 +11,18 @@
         "Bernard Cazeneuve",
         "Dominique de Villepin"
       ]
+    },
+    {
+      "id": "freestyle",
+      "label": "Je suis un des busy",
+      "note": "Tous beaucoup plus intelligents",
+      "candidates": [
+        "Marine Tondelier",
+        "Bernard Cazeneuve",
+        "Xavier Bertrand",
+        "Bruno Retailleau",
+        "Natacha Polony"
+      ]
     }
   ]
 }
