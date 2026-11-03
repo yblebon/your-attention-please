@@ -219,6 +219,24 @@ const groups = [
 const badgeText = {declared:"Declared", considering:"Considering", out:"Out"};
 let filter = "all", query = "", sortWpi = false;
 
+// Custom sections from sections.json (same folder as this page)
+const norm = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
+let custom = [];
+function buildCustom(cfg){
+  return (cfg.sections||[]).map(sec=>{
+    const names = new Set((sec.candidates||[]).map(norm));
+    const found = new Set();
+    const list = candidates.filter(c=>{ const k = norm(c.n); if(names.has(k)){found.add(k); return true;} return false; });
+    names.forEach(k=>{ if(!found.has(k)) console.warn("sections.json: no candidate named '"+k+"' (section '"+sec.id+"')"); });
+    return {id:"x-"+sec.id, label:sec.label||sec.id, note:sec.note||"", list};
+  });
+}
+function loadSections(){
+  fetch("sections.json",{cache:"no-store"}).then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
+    .then(cfg=>{ custom = buildCustom(cfg); renderTabs(); renderList(); })
+    .catch(e=>{ console.warn("sections.json not loaded:", e.message); });
+}
+
 // Banana scale: 0 = far right ... 7 = far left (by political family, approximate)
 const BANANA_MAX = 7;
 const bananaScale = {"Far right":0,"Sovereignists":1,"Right":2,"Centre":3,"Social democrats":4,"Greens":5,"Left":6,"Far left":7};
@@ -477,7 +495,8 @@ function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;
 function renderTabs(){
   const el = document.getElementById("tabs");
   const defs = [{id:"all",label:"All ("+candidates.length+")"}]
-    .concat(groups.map(g=>({id:g.id,label:badgeText[g.id]+" ("+candidates.filter(c=>c.s===g.id).length+")"})));
+    .concat(groups.map(g=>({id:g.id,label:badgeText[g.id]+" ("+candidates.filter(c=>c.s===g.id).length+")"})))
+    .concat(custom.map(x=>({id:x.id,label:esc(x.label)+" ("+x.list.length+")"})));
   el.innerHTML = defs.map(d=>`<button class="tab" data-f="${d.id}" aria-pressed="${filter===d.id}">${d.label}</button>`).join("");
   el.querySelectorAll("button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderTabs();renderList();});
 }
@@ -486,14 +505,7 @@ function renderList(){
   const q = query.trim().toLowerCase();
   const match = c => !q || (c.n+" "+c.p+" "+c.g).toLowerCase().includes(q);
   let html = "", total = 0;
-  groups.forEach(g=>{
-    if(filter!=="all" && filter!==g.id) return;
-    let items = candidates.filter(c=>c.s===g.id && match(c));
-    if(sortWpi) items = items.slice().sort((a,b)=>(wpiOf(b.n)??-1)-(wpiOf(a.n)??-1));
-    if(!items.length) return;
-    total += items.length;
-    html += `<h2>${g.label} <small>${items.length} · ${g.note}</small></h2><div class="grid">` +
-      items.map(c=>`<article class="card c-${c.s}">
+  const cardOf = c => `<article class="card c-${c.s}">
         <span class="badge b-${c.s}">${badgeText[c.s]}</span>
         <div class="top">${avatar(c.n)}<div><h3>${esc(c.n)}</h3>
         <div class="party">${esc(c.p)} · ${esc(c.g)}</div></div></div>
@@ -506,7 +518,19 @@ function renderList(){
         ${polLine(c.n)}
         ${legalLine(c.n)}
         ${healthLine(c.n)}
-        <p class="note">${esc(c.t)}</p></article>`).join("") + `</div>`;
+        <p class="note">${esc(c.t)}</p></article>`;
+  const section = (label, note, items) => {
+    items = items.filter(match);
+    if(sortWpi) items = items.slice().sort((a,b)=>(wpiOf(b.n)??-1)-(wpiOf(a.n)??-1));
+    if(!items.length) return;
+    total += items.length;
+    html += `<h2>${label} <small>${items.length}${note?" · "+esc(note):""}</small></h2><div class="grid">${items.map(cardOf).join("")}</div>`;
+  };
+  const cs = custom.find(x=>x.id===filter);
+  if(cs) section(esc(cs.label), cs.note, cs.list);
+  else groups.forEach(g=>{
+    if(filter!=="all" && filter!==g.id) return;
+    section(g.label, g.note, candidates.filter(c=>c.s===g.id));
   });
   document.getElementById("list").innerHTML = html || '<p class="empty">No candidates match your search.</p>';
 }
@@ -514,7 +538,7 @@ function renderList(){
 document.getElementById("sortbtn").addEventListener("click",e=>{sortWpi=!sortWpi;e.currentTarget.setAttribute("aria-pressed",sortWpi);renderList();});
 document.getElementById("q").addEventListener("input",e=>{query=e.target.value;renderList();});
 document.getElementById("count-declared").textContent = candidates.filter(c=>c.s===D).length;
-renderTabs(); renderList();
+renderTabs(); renderList(); loadSections();
 // snowfall
 (function(){
   const flakes = ["❄","❅","❆"];

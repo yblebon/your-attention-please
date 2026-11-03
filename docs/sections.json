@@ -1,0 +1,16 @@
+{
+  "_help": "Add your own sections here. Each one becomes an extra tab. 'candidates' lists names exactly as shown on the cards (case and accents are ignored). Unknown names are reported in the browser console.",
+  "sections": [
+    {
+      "id": "former-pms",
+      "label": "Former Prime Ministers",
+      "note": "Have previously headed the French government",
+      "candidates": [
+        "Édouard Philippe",
+        "Gabriel Attal",
+        "Bernard Cazeneuve",
+        "Dominique de Villepin"
+      ]
+    }
+  ]
+}
