@@ -79,6 +79,12 @@
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
   .card h3{margin:0;font-size:1.05rem}
+  .top{display:flex;gap:12px;align-items:center}
+  .av{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:1rem;color:#fff;letter-spacing:.5px;border:2px solid var(--gold);box-shadow:0 0 10px var(--glow)}
+  .links{display:flex;gap:8px;flex-wrap:wrap;font-size:.82rem}
+  .lk{color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:2px 10px;background:rgba(255,255,255,.04)}
+  a.lk:hover{border-color:var(--gold);color:var(--gold)}
+  .lk.off{color:var(--muted);font-style:italic}
   .party{color:var(--muted);font-size:.9rem}
   .note{font-size:.9rem;margin:2px 0 0}
   .badge{display:inline-block;align-self:flex-start;font-size:.72rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;padding:2px 9px;border-radius:999px;border:1px solid currentColor}
@@ -115,6 +121,7 @@
 
   <footer>
     <p><b>Notes.</b> This list is provisional. Only candidates who gather 500 valid sponsorships and are validated by the Constitutional Council will appear on the ballot (12 did in 2022). Presidents are limited to two consecutive terms, so Emmanuel Macron cannot run. Within each group, candidates are ordered roughly from left to right; order carries no other meaning.</p>
+    <p><b>Links and avatars.</b> Website links come from each candidate's France-Vote profile ("Site officiel"). Where that is a party or movement site rather than a personal one, the button says "Party site". "Find on X" opens an X people search for the name, because I could not verify each official handle from here. The round avatars show initials, not photos.</p>
     <p><b>Age and sex.</b> Birth dates come from each person's English Wikipedia page, and ages are calculated from today's date when the page loads. For 13 minor or little-documented candidates I could not find a reliable birth date, so no age is shown. Sex is shown as presented in public sources and, for those minor candidates, inferred from first names and the press's grammatical forms.</p>
     <p><b>Children.</b> Numbers are as stated on each person's English Wikipedia page. "children n/a" means the page doesn't say, not that the person has none. *Xavier Bertrand's page gives 3 in the text and 5 in the infobox.</p>
     <p><b>World Popularity Index (🌍 WPI).</b> A 0–100 score based only on the number of followers of a person's main account on X, on a logarithmic scale: WPI = 100 × log₁₀(followers ÷ 10,000) ÷ log₁₀(top account ÷ 10,000). Marine Le Pen has the most followers (about 3.05 million), so she sets 100. Followers come from <a href="https://www.qui-sera-president.fr/">qui-sera-president.fr</a>, which counts them automatically once a day; the figures here are from 26 Oct 2026 and were not refreshed in the 3 Nov update because the source could not be reached. The index is not a measure of real popularity: it ignores other platforms, includes inactive or purchased followers, counts people who follow in order to criticise, and says nothing about voters. Followers worldwide are counted, not just French voters. It also doesn't cover all candidates: the source tracks 25 of the 45 on this page, and the rest show "n/a", which says nothing about their popularity.</p>
@@ -434,6 +441,37 @@ function meta(name){
   return `<div class="meta">${sex}${age}${kt}</div>`;
 }
 
+// Websites: from each candidate's France-Vote profile ("Site officiel"). kind: "p" = personal/campaign, "m" = party or movement site.
+const sites = {
+  "Nathalie Arthaud":["https://www.lutte-ouvriere.org","m"], "Anasse Kazib":["https://www.revolutionpermanente.fr","m"],
+  "Jean-Luc Mélenchon":["https://melenchon.fr","p"], "Fabien Roussel":["https://rousselfabien.com","p"],
+  "François Ruffin":["https://francoisruffin.fr","p"], "Juan Branco":["https://juan-branco.fr","p"],
+  "Marine Tondelier":["https://marinetondelier.fr","p"], "Delphine Batho":["https://www.delphinebatho.fr","p"],
+  "Raphaël Glucksmann":["https://raphaelglucksmann.fr","p"], "Bernard Cazeneuve":["https://www.la-convention.fr","m"],
+  "Gabriel Attal":["https://attalpresident.fr","p"], "Édouard Philippe":["https://www.edouardphilippe.fr","p"],
+  "Xavier Bertrand":["https://www.nousfrance.fr","m"], "David Lisnard":["https://www.unenouvelleenergie.fr/","m"],
+  "Bruno Retailleau":["https://www.avecretailleau.fr","p"], "Nicolas Dupont-Aignan":["https://www.dupontaignan.fr","p"],
+  "François Asselineau":["https://www.upr.fr","m"], "Florian Philippot":["https://les-patriotes.fr","m"],
+  "Marine Le Pen":["https://marinelepen.com","p"], "Éric Zemmour":["https://www.ericzemmour.fr","p"],
+  "Olivier Becht":["https://becht2027.fr","p"], "Mira Markovic":["https://parti-animaliste.fr/mira-markovic-2027","m"],
+  "Dominique de Villepin":["https://www.lafrancehumaniste.fr","m"], "Bruno Le Maire":["https://www.uneautrefrance.fr","m"],
+  "Jean Lassalle":["https://resistons-france.fr","m"], "Olivier Faure":["https://olivierfaure.fr","p"],
+  "Jérôme Guedj":["https://www.jeromeguedj2027.fr","p"], "Ségolène Royal":["https://segoleneroyal.eu","p"],
+  "Emmanuel Maurel":["https://emmanuelmaurel.eu","p"], "Clémentine Autain":["https://clementine-autain.fr","p"],
+  "Antoine Mikolajczak":["https://parti-equinoxe.fr","m"], "Clara Egger":["https://solutiondemocratique.substack.com","m"]
+};
+const AVCOL = ["#b3262f","#1f7a4d","#b8891a","#2f6f9f","#7a3e7a","#3f7d6b"];
+function initials(n){ const w = n.replace(/\(.*\)/,"").trim().split(/\s+/); return (w[0][0]+(w.length>1?w[w.length-1][0]:"")).toUpperCase(); }
+function avatar(n){
+  let h = 0; for(const ch of n) h = (h*31 + ch.charCodeAt(0)) >>> 0;
+  return `<div class="av" style="background:${AVCOL[h%AVCOL.length]}" aria-hidden="true">${esc(initials(n))}</div>`;
+}
+function linkRow(n){
+  const w = sites[n];
+  const web = w ? `<a class="lk" href="${w[0]}" target="_blank" rel="noopener noreferrer" title="${w[1]==="m" ? "Website of the candidate's party or movement (no personal site listed)" : "Official website"}">🌐 ${w[1]==="m" ? "Party site" : "Website"}</a>` : `<span class="lk off" title="No official website listed on France-Vote">🌐 no site found</span>`;
+  const x = `<a class="lk" href="https://x.com/search?q=${encodeURIComponent(n)}&f=user" target="_blank" rel="noopener noreferrer" title="Opens an X people search for this name. I could not verify the official handle.">𝕏 Find on X</a>`;
+  return `<div class="links">${web}${x}</div>`;
+}
 function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 
 function renderTabs(){
@@ -457,8 +495,9 @@ function renderList(){
     html += `<h2>${g.label} <small>${items.length} · ${g.note}</small></h2><div class="grid">` +
       items.map(c=>`<article class="card c-${c.s}">
         <span class="badge b-${c.s}">${badgeText[c.s]}</span>
-        <h3>${esc(c.n)}</h3>
-        <div class="party">${esc(c.p)} · ${esc(c.g)}</div>
+        <div class="top">${avatar(c.n)}<div><h3>${esc(c.n)}</h3>
+        <div class="party">${esc(c.p)} · ${esc(c.g)}</div></div></div>
+        ${linkRow(c.n)}
         ${meta(c.n)}
         ${wpiLine(c.n)}
         ${eiLine(c.n)}
