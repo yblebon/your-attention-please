@@ -6,29 +6,32 @@
 <title>French Presidential Election 2027 – Candidates</title>
 <style>
   :root{
-    --bg:#120b1c; --card:#1d1230; --ink:#f3ecff; --muted:#b5a6cc; --line:#3a2559; --accent:#ff8a1f;
-    --declared:#7ee08a; --considering:#ffb347; --out:#a08fb8; --glow:rgba(255,138,31,.35);
+    --bg:#0b2a1f; --card:#12392b; --ink:#fff8ee; --muted:#b9d3c4; --line:#2a6049; --accent:#e63946; --gold:#f4c542;
+    --declared:#8be0a4; --considering:#ffd166; --out:#a9c4b5; --glow:rgba(244,197,66,.35);
   }
-  body{background:radial-gradient(ellipse at 50% -10%,#3b1a5e 0,#120b1c 55%) fixed,#120b1c}
-  /* moon */
-  .moon{position:absolute;top:18px;right:6%;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff7d6,#f3d77a 70%);box-shadow:0 0 50px 12px rgba(255,230,140,.35);opacity:.9}
-  .moon::after{content:"";position:absolute;left:52%;top:28%;width:16px;height:16px;border-radius:50%;background:rgba(0,0,0,.08);box-shadow:-26px 30px 0 4px rgba(0,0,0,.07)}
+  body{background:radial-gradient(ellipse at 50% -10%,#1f6048 0,#0b2a1f 60%) fixed,#0b2a1f}
   header{position:relative;overflow:hidden}
   header .wrap{position:relative;z-index:1}
-  /* fog + floating things */
-  .float{position:fixed;pointer-events:none;z-index:0;font-size:28px;opacity:.55;animation:drift linear infinite}
-  @keyframes drift{0%{transform:translate(0,0) rotate(-6deg)}50%{transform:translate(40px,-30px) rotate(6deg)}100%{transform:translate(0,0) rotate(-6deg)}}
   main,footer{position:relative;z-index:1}
-  .web{position:absolute;top:0;left:0;width:150px;height:150px;opacity:.5;z-index:1}
+  /* snow */
+  .flake{position:fixed;top:-30px;pointer-events:none;z-index:0;color:#fff;opacity:.8;animation:fall linear infinite}
+  @keyframes fall{to{transform:translateY(112vh) translateX(40px) rotate(360deg)}}
+  /* string of lights */
+  .lights{display:flex;justify-content:space-between;padding:0 8px;position:relative;z-index:2;background:var(--card)}
+  .lights::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:#4a3b2c}
+  .lights span{width:9px;height:14px;margin-top:2px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:currentColor;box-shadow:0 0 10px 2px currentColor;animation:twinkle 1.8s ease-in-out infinite}
+  .lights span:nth-child(4n+1){color:#ff4d5a}.lights span:nth-child(4n+2){color:#ffd166;animation-delay:.4s}
+  .lights span:nth-child(4n+3){color:#5dd88c;animation-delay:.8s}.lights span:nth-child(4n){color:#5ab7ff;animation-delay:1.2s}
+  @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.35}}
   h1{text-shadow:0 0 18px var(--glow)}
   h1 .pk{display:inline-block;animation:bob 2.4s ease-in-out infinite}
   @keyframes bob{50%{transform:translateY(-4px) rotate(8deg)}}
   .card{box-shadow:0 0 0 0 transparent;transition:transform .2s,box-shadow .2s,border-color .2s}
-  .card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 6px 22px var(--glow)}
-  .card h3::before{content:"🎃 ";font-size:.85em}
-  .card.c-considering h3::before{content:"👻 "}
-  .card.c-out h3::before{content:"💀 "}
-  h2{color:#ffb347}
+  .card:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 6px 22px var(--glow)}
+  .card h3::before{content:"🎄 ";font-size:.85em}
+  .card.c-considering h3::before{content:"🎁 "}
+  .card.c-out h3::before{content:"❄️ "}
+  h2{color:var(--gold)}
   .meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.8rem;margin:2px 0}
   .meta span{border:1px solid var(--line);border-radius:6px;padding:1px 8px;color:var(--muted)}
   .meta .sx.f{color:#ff9bd2;border-color:#7a3a62} .meta .sx.m{color:#8fc8ff;border-color:#2f5679}
@@ -55,10 +58,10 @@
   .nana .big{font-size:2rem;line-height:1}
   .legend{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:6px 0 0;font-size:.9rem;color:var(--muted)}
   .legend b{color:var(--ink)}
-  @media (prefers-reduced-motion:reduce){.float,h1 .pk{animation:none}.card{transition:none}}
+  @media (prefers-reduced-motion:reduce){.flake{display:none}.lights span,h1 .pk{animation:none}.card{transition:none}}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-  header{border-top:6px solid transparent;border-image:linear-gradient(90deg,#1f3a8a 33%,#fff 33% 66%,#c8102e 66%) 1;background:var(--card);border-bottom:1px solid var(--line)}
+  header{border-top:8px solid transparent;border-image:repeating-linear-gradient(45deg,#e63946 0 12px,#fff8ee 12px 24px) 1;background:var(--card)}
   .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
   header .wrap{padding-top:28px;padding-bottom:24px}
   h1{margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:-.01em}
@@ -70,7 +73,6 @@
   .tabs{display:flex;flex-wrap:wrap;gap:8px}
   button.tab{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 14px;border-radius:999px;font:inherit;font-size:.92rem;cursor:pointer}
   button.tab[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
-  button.tab[aria-pressed="true"]{color:#1a0f00}
   input[type=search]{flex:1;min-width:180px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit}
   h2{font-size:1.15rem;margin:28px 0 10px;display:flex;align-items:center;gap:10px}
   h2 small{color:var(--muted);font-weight:400;font-size:.85rem}
@@ -83,22 +85,15 @@
   .b-declared{color:var(--declared)} .b-considering{color:var(--considering)} .b-out{color:var(--out)}
   .empty{color:var(--muted);padding:20px 0}
   footer{margin:36px 0 48px;color:var(--muted);font-size:.88rem}
-  footer a{color:var(--accent)}
+  footer a{color:var(--gold)}
   footer ul{padding-left:18px}
 </style>
 </head>
 <body>
-<div class="float" style="left:6%;top:30%;animation-duration:9s">🦇</div>
-<div class="float" style="left:78%;top:55%;animation-duration:12s">👻</div>
-<div class="float" style="left:90%;top:20%;animation-duration:10s">🦇</div>
-<div class="float" style="left:3%;top:75%;animation-duration:14s">🕷️</div>
-<div class="float" style="left:55%;top:85%;animation-duration:11s">🦇</div>
 <header>
-  <div class="moon"></div>
-  <svg class="web" viewBox="0 0 150 150" fill="none" stroke="#d9c9f0" stroke-width="1"><path d="M0 0L150 0M0 0L150 50M0 0L150 110M0 0L110 150M0 0L50 150M0 0L0 150"/><path d="M30 0Q22 22 0 30M60 0Q45 45 0 60M95 0Q70 70 0 95M130 0Q95 95 0 130"/></svg>
   <div class="wrap">
-    <h1><span class="pk">🎃</span> French Presidential Election 2027</h1>
-    <p class="sub">Candidates declared, considering, and no longer in the race — status as of 27 October 2026</p>
+    <h1><span class="pk">🎄</span> French Presidential Election 2027</h1>
+    <p class="sub">Candidates declared, considering, and no longer in the race — status as of 3 November 2026</p>
     <div class="facts">
       <div class="fact"><b>18 April 2027</b>First round</div>
       <div class="fact"><b>2 May 2027</b>Runoff (if needed)</div>
@@ -107,6 +102,7 @@
     </div>
   </div>
 </header>
+<div class="lights" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
 <main class="wrap">
   <div class="controls">
@@ -119,15 +115,16 @@
 
   <footer>
     <p><b>Notes.</b> This list is provisional. Only candidates who gather 500 valid sponsorships and are validated by the Constitutional Council will appear on the ballot (12 did in 2022). Presidents are limited to two consecutive terms, so Emmanuel Macron cannot run. Within each group, candidates are ordered roughly from left to right; order carries no other meaning.</p>
-    <p><b>Age and sex.</b> Birth dates come from each person's English Wikipedia page, and ages are calculated from today's date when the page loads. For 11 minor or little-documented candidates I could not find a reliable birth date, so no age is shown. Sex is shown as presented in public sources and, for those minor candidates, inferred from first names and the press's grammatical forms.</p>
+    <p><b>Age and sex.</b> Birth dates come from each person's English Wikipedia page, and ages are calculated from today's date when the page loads. For 13 minor or little-documented candidates I could not find a reliable birth date, so no age is shown. Sex is shown as presented in public sources and, for those minor candidates, inferred from first names and the press's grammatical forms.</p>
     <p><b>Children.</b> Numbers are as stated on each person's English Wikipedia page. "children n/a" means the page doesn't say, not that the person has none. *Xavier Bertrand's page gives 3 in the text and 5 in the infobox.</p>
-    <p><b>World Popularity Index (🌍 WPI).</b> A 0–100 score based only on the number of followers of a person's main account on X, on a logarithmic scale: WPI = 100 × log₁₀(followers ÷ 10,000) ÷ log₁₀(top account ÷ 10,000). Marine Le Pen has the most followers (about 3.05 million), so she sets 100. Followers come from <a href="https://www.qui-sera-president.fr/">qui-sera-president.fr</a>, which counts them automatically once a day (26 Oct 2026 here). The index is not a measure of real popularity: it ignores other platforms, includes inactive or purchased followers, counts people who follow in order to criticise, and says nothing about voters. Followers worldwide are counted, not just French voters. It also doesn't cover all candidates: the source tracks 25 of the 42 on this page, and the rest show "n/a", which says nothing about their popularity.</p>
+    <p><b>World Popularity Index (🌍 WPI).</b> A 0–100 score based only on the number of followers of a person's main account on X, on a logarithmic scale: WPI = 100 × log₁₀(followers ÷ 10,000) ÷ log₁₀(top account ÷ 10,000). Marine Le Pen has the most followers (about 3.05 million), so she sets 100. Followers come from <a href="https://www.qui-sera-president.fr/">qui-sera-president.fr</a>, which counts them automatically once a day; the figures here are from 26 Oct 2026 and were not refreshed in the 3 Nov update because the source could not be reached. The index is not a measure of real popularity: it ignores other platforms, includes inactive or purchased followers, counts people who follow in order to criticise, and says nothing about voters. Followers worldwide are counted, not just French voters. It also doesn't cover all candidates: the source tracks 25 of the 45 on this page, and the rest show "n/a", which says nothing about their popularity.</p>
     <p><b>Entrepreneurial Index (💼 EI).</b> A 0–100 score for business experience, built from what each person's English Wikipedia page says. Points add up across categories and are capped at 100: founding a clearly commercial business = 55; founding a publication or venture whose legal or commercial form isn't stated = 35; an executive or management role in a private organisation (director, general manager, chair, editor-in-chief, manager) = 30; salaried private-sector work, including lawyers and journalists at private outlets = 15. Public-sector jobs, parties, unions, associations and elected office don't count. A 0 means nothing was documented on that page, not that the person has no business experience: Wikipedia is thin on this (for example, David Lisnard's page lists him as a "businessman" but names no company, and François Asselineau's page mentions a 1989–90 role at SADEF without saying whether it was a private company). The rubric is my own, so treat it as a rough guide and not a measurement of ability to govern.</p>
     <p><b>Education (🎓).</b> 🎓 = bachelor-level or vocational diploma; 🎓🎓 = one master-level degree or a Sciences Po / grande école graduate; 🎓🎓🎓 = ENA, or two or more master-level or postgraduate degrees. "Not stated" means the Wikipedia page names no degree, not that the person has none. Where the page names only a school (for example Sciences Po), I counted it as graduating and said so in the hover text. This is a rough scale of level, not of quality.</p>
     <p><b>Years in politics (🏛️).</b> One 🏛️ per started decade, counted from the earliest political role, candidacy or office documented on each person's Wikipedia page (hover for the role). "≥" means the page gives only a later date, so the real figure may be higher. Journalism, business or union careers are not counted as politics. Hollande's start (1979) is approximate.</p>
-    <p><b>Law and justice (handcuffs).</b> One cuff = investigated or subject of a complaint only; two = formally charged or tried, including cases ending in acquittal or dismissal; three = at least one conviction. Everyone is presumed innocent unless convicted, and an investigation or complaint is not a finding of guilt. Only matters involving the person themselves are counted, as stated on their Wikipedia page, so cases where they are the victim or plaintiff, or that concern relatives or their party, are left out. "None documented" means none appeared in those pages, which may lag behind recent developments. Please check current sources before relying on any entry.</p>
-    <p><b>Health notes (🦠).</b> One 🦠 per health condition that the person has publicly disclosed or that major outlets have reported. "None documented" means nothing turned up in the pages I checked, not that the person is in good health. Candidates marked "not checked" are minor candidates with too little public documentation. Family members' health and speculation are excluded.</p>
-    <p>Sources (checked 26–28 Oct 2026):</p>
+    <p><b>Law and justice (handcuffs).</b> One cuff = investigated or subject of a complaint only; two = formally charged or tried, including cases ending in acquittal or dismissal; three = at least one conviction. Everyone is presumed innocent unless convicted, and an investigation or complaint is not a finding of guilt. Only matters involving the person themselves are counted, as stated on their Wikipedia page, so cases where they are the victim or plaintiff, or that concern relatives or their party, are left out. "None documented" means none appeared in those pages, which may lag behind recent developments. A 'témoin assisté' status is counted as one cuff because it is not a formal charge. Please check current sources before relying on any entry.</p>
+    <p><b>Health notes (🦠).</b> One 🦠 per health condition that the person has publicly disclosed or that major outlets have reported. "None documented" means nothing turned up in the pages I checked, not that the person is in good health. Candidates marked "not checked" are minor or late-added candidates with too little public documentation. Family members' health and speculation are excluded.</p>
+    <p><b>Update of 3 November 2026.</b> New since 27 October: Gilles Platret (declared 8 Oct), Emmanuel Dubuisson and Jean-Michel Fauvergue (listed as declared), Olivier Becht and Mira Markovic details, and Édouard Philippe's new legal status (29 Oct). Still pending: Bruno Le Maire's announced October decision (nothing found), François Hollande's December decision, and the Écologistes members' vote on 10–13 December. The four candidacies without a verifiable declaration date (Mlekuz, Mathieu, Legendre, Durif) are kept but flagged. Gilles Platret was added late, so only his age and political start were checked.</p>
+    <p>Sources (checked 26 Oct – 3 Nov 2026):</p>
     <ul>
       <li><a href="https://www.france-vote.fr/candidats">France-Vote – Les candidats à la présidentielle 2027</a></li>
       <li><a href="https://www.publicsenat.fr/actualites/politique/election-presidentielle-2027-qui-sont-les-candidats-declares-ou-presque">Public Sénat – Candidats déclarés ou presque</a></li>
@@ -136,6 +133,10 @@
       <li><a href="https://www.cnn.com/2026/07/07/europe/marine-le-pen-france-court-ruling-intl">CNN – Le Pen appeal ruling and candidacy</a></li>
       <li><a href="https://www.euronews.com/2026/10/14/french-journalist-natacha-polony-joins-growing-field-of-2027-presidential-hopefuls">Euronews – Natacha Polony joins the field</a></li>
       <li><a href="https://lcp.fr/actualites/presidentielle-2027-la-liste-des-candidats-deja-en-lice-et-des-pretendants-436373">LCP – Candidats en lice et prétendants</a></li>
+      <li><a href="https://repere2027.fr/candidats/">Repère 2027 – Liste complète des candidats</a></li>
+      <li><a href="https://lcp.fr/actualites/soupcons-de-detournement-de-fonds-publics-edouard-philippe-place-sous-le-statut-de">LCP – Édouard Philippe placé sous le statut de témoin assisté</a></li>
+      <li><a href="https://www.leclubdesjuristes.com/en-bref/placement-dedouard-philippe-sous-le-statut-de-temoin-assiste-dans-une-enquete-pour-detournement-de-fonds-publics-18148/">Club des juristes – Philippe, témoin assisté</a></li>
+      <li><a href="https://www.24matins.fr/le-pen-face-a-une-echeance-judiciaire-cle-avant-la-presidentielle-1422589">24matins – Le Pen face à une échéance judiciaire clé</a></li>
     </ul>
   </footer>
 </main>
@@ -162,9 +163,10 @@ const candidates = [
   // Centre
   {n:"Gabriel Attal", p:"Renaissance", g:"Centre", s:D, t:"Former prime minister; declared 22 May 2026."},
   {n:"Édouard Philippe", p:"Horizons", g:"Centre", s:D, t:"Former prime minister; mayor of Le Havre; has declared since September 2024."},
-  {n:"Olivier Becht", p:"No party label (centrist deputy)", g:"Centre", s:D, t:"Listed as declared by France-Vote."},
+  {n:"Olivier Becht", p:"Ensemble pour la République (deputy)", g:"Centre", s:D, t:"Declared on 24 September 2026, per Repère 2027."},
   // Right
-  {n:"Xavier Bertrand", p:"Nous France", g:"Right", s:D, t:"President of the Hauts-de-France region; running outside any primary."},
+  {n:"Gilles Platret", p:"Divers droite (mayor of Chalon-sur-Saône)", g:"Right", s:D, t:"New since last update. Announced on 8 October 2026 at a public meeting in Chalon-sur-Saône; left Les Républicains, where he was vice-president 2019–2023."},
+  {n:"Xavier Bertrand", p:"Nous France", g:"Right", s:D, t:"President of the Hauts-de-France region; running outside any primary. One tracker (Repère 2027) lists him as 'pressenti' rather than declared."},
   {n:"David Lisnard", p:"Nouvelle Énergie", g:"Right", s:D, t:"Mayor of Cannes; left Les Républicains on 31 March 2026."},
   {n:"Bruno Retailleau", p:"Les Républicains", g:"Right", s:D, t:"Chosen by LR members on 19–20 April 2026."},
   // Sovereignists
@@ -176,19 +178,21 @@ const candidates = [
   {n:"Marine Le Pen", p:"Rassemblement national", g:"Far right", s:D, t:"Conviction upheld on appeal on 7 July 2026 but her ineligibility was reduced, leaving her able to run. She declared that evening and is appealing to the Cour de cassation. Jordan Bardella is the RN's fallback if she cannot stand."},
   {n:"Éric Zemmour", p:"Reconquête", g:"Far right", s:D, t:"Confirmed his candidacy on 17 September, per Public Sénat (France-Vote still lists it as unconfirmed)."},
   // Other
-  {n:"Mira Markovic", p:"Parti animaliste", g:"Other", s:D, t:"Animal-welfare party candidate."},
+  {n:"Mira Markovic", p:"Parti animaliste", g:"Other", s:D, t:"Designated by the animalist party on 2 October 2026."},
   {n:"Francis Lalanne", p:"France Libre", g:"Other", s:D, t:"Singer-songwriter turned candidate."},
   {n:"Antoine Mikolajczak", p:"Équinoxe", g:"Other", s:D, t:"Engineer and party leader; announced 27 June 2026."},
   {n:"Clara Egger", p:"Solution démocratique", g:"Other", s:D, t:"Academic; announced 20 April 2026."},
-  {n:"Manolo Mlekuz", p:"Trajectoire", g:"Other", s:D, t:"Minor candidacy reported by the press."},
-  {n:"Benoît Mathieu", p:"No party label", g:"Other", s:D, t:"Minor candidacy reported by the press."},
-  {n:"Jean-François Legendre", p:"À nous maintenant", g:"Other", s:D, t:"Minor candidacy reported by the press."},
-  {n:"Sylvain Durif", p:"Elvita", g:"Other", s:D, t:"Minor candidacy reported by the press."},
+  {n:"Emmanuel Dubuisson", p:"Les Gaulois", g:"Other", s:D, t:"New since last update. Declared in June 2026, per Repère 2027; little else documented."},
+  {n:"Jean-Michel Fauvergue", p:"No label (former RAID chief and LREM deputy)", g:"Other", s:D, t:"New since last update. Declared in autumn 2025 (no precise date), per Repère 2027."},
+  {n:"Manolo Mlekuz", p:"Trajectoire", g:"Other", s:D, t:"Candidacy mentioned by the press; no verifiable declaration date found."},
+  {n:"Benoît Mathieu", p:"No party label", g:"Other", s:D, t:"Candidacy mentioned by the press; no verifiable declaration date found."},
+  {n:"Jean-François Legendre", p:"À nous maintenant", g:"Other", s:D, t:"Candidacy mentioned by the press; no verifiable declaration date found."},
+  {n:"Sylvain Durif", p:"Elvita", g:"Other", s:D, t:"Candidacy mentioned by the press; no verifiable declaration date found."},
 
   // Considering
   {n:"Dominique de Villepin", p:"La France humaniste", g:"Centre", s:C, t:"Former prime minister. Said on 30 August he wants to be a candidate and claims several hundred of the 500 sponsorships, but has not formally declared."},
   {n:"François Hollande", p:"Parti socialiste", g:"Social democrats", s:C, t:"Former president and deputy for Corrèze. Published a book in September and says he will announce his decision in December."},
-  {n:"Bruno Le Maire", p:"Renaissance (former minister)", g:"Centre", s:C, t:"Said he would announce his decision in October; no announcement found as of 26 October."},
+  {n:"Bruno Le Maire", p:"Renaissance (former minister)", g:"Centre", s:C, t:"Said he would announce his decision in October; no announcement found as of 3 November."},
   {n:"Jean Lassalle", p:"Résistons !", g:"Sovereignists", s:C, t:"Says he holds half the needed sponsorships; running depends on a fundraising drive."},
 
   // Out
@@ -225,7 +229,7 @@ const info = {
   "Jean-Luc Mélenchon":["1951-08-19","M"], "Fabien Roussel":["1969-04-16","M"], "François Ruffin":["1975-10-18","M"],
   "Juan Branco":[null,"M"], "Marine Tondelier":["1986-08-23","F"], "Delphine Batho":["1973-03-23","F"],
   "Raphaël Glucksmann":["1979-10-15","M"], "Bernard Cazeneuve":["1963-06-02","M"], "Karim Bouamrane":["1973-02-21","M"],
-  "Gabriel Attal":["1989-03-16","M"], "Édouard Philippe":["1970-11-28","M"], "Olivier Becht":[null,"M"],
+  "Gabriel Attal":["1989-03-16","M"], "Édouard Philippe":["1970-11-28","M"], "Olivier Becht":[null,"M"], "Gilles Platret":["1973-04-19","M"], "Emmanuel Dubuisson":[null,"M"], "Jean-Michel Fauvergue":[null,"M"],
   "Xavier Bertrand":["1965-03-21","M"], "David Lisnard":["1969-02-02","M"], "Bruno Retailleau":["1960-11-20","M"],
   "Nicolas Dupont-Aignan":["1961-03-07","M"], "François Asselineau":["1957-09-14","M"], "Florian Philippot":["1981-10-24","M"],
   "Natacha Polony":["1975-04-15","F"], "Marine Le Pen":["1968-08-05","F"], "Éric Zemmour":["1958-08-31","M"],
@@ -282,6 +286,7 @@ const edu = {
 // Years in politics: since the earliest documented political role, candidacy or office, per Wikipedia.
 // atLeast = true where the page only gives a later date (earlier activity may exist but is undated there).
 const pol = {
+  "Gilles Platret":[2014,1,"mayor of Chalon-sur-Saône (earliest mandate listed on the source page)"],
   "Nathalie Arthaud":[2001,0,"first candidacy (municipal election)"],
   "Anasse Kazib":[2017,0,"joined a revolutionary communist faction"],
   "Jean-Luc Mélenchon":[1972,0,"joined the Internationalist Communist Organisation (first elected 1983)"],
@@ -320,9 +325,9 @@ const pol = {
 const legal = {
   "Anasse Kazib":[2,"2022: summoned over an undeclared demonstration. Since Oct 2023: investigated, then due to stand trial (2025) for 'apologie du terrorisme' over social-media posts. No verdict stated on the page."],
   "Jean-Luc Mélenchon":[3,"Convicted in Dec 2019 (rebellion and provocation: 3 months suspended; intimidation of officials: €8,000 fine plus 3 months suspended) and in Sept 2021 (public defamation)."],
-  "Édouard Philippe":[1,"As mayor of Le Havre: preliminary probe (2023–24) and a national financial prosecutor's investigation (from 2024; investigating judge appointed in 2026) into suspected favouritism and misuse of public funds; a financial-markets authority probe in 2026. No charge or conviction is stated."],
+  "Édouard Philippe":[1,"As mayor of Le Havre: preliminary probe (2023–24), then a judicial investigation by two financial judges. On 29 Oct 2026 he was placed under 'témoin assisté' status (a status less incriminating than a formal charge) over suspected misuse of public funds, favouritism and moral harassment in the Le Havre urban community. His lawyer called it a favourable decision. No formal charge or conviction."],
   "François Asselineau":[2,"2020 complaints alleging sexual harassment/assault; placed under formal investigation in 2021 (he denies it); charges dismissed Dec 2024; Paris Court of Appeal ordered a trial in May 2026. No verdict yet."],
-  "Marine Le Pen":[3,"Convicted in 2014 (electoral fraud, €10,000), 2023 (defamation, €500) and 31 Mar 2025 (EU-funds embezzlement), the last upheld on appeal on 7 Jul 2026 with her ineligibility reduced; she is appealing to the Cour de cassation. Acquitted in 2015 (incitement to hatred)."],
+  "Marine Le Pen":[3,"Convicted in 2014 (electoral fraud, €10,000), 2023 (defamation, €500) and 31 Mar 2025 (EU-funds embezzlement), the last upheld on appeal on 7 Jul 2026 with her ineligibility reduced; she is appealing to the Cour de cassation, which is due to examine her constitutional questions by 16 Dec 2026, with a ruling on the appeal expected around late March or early April 2027 (press reports). Acquitted in 2015 (incitement to hatred)."],
   "Éric Zemmour":[3,"Several convictions for incitement to hatred or discrimination (2011, 2018–19, 2022, 2025), alongside several acquittals and an overturned conviction."],
   "Francis Lalanne":[1,"2021: investigated over an op-ed said to provoke attacks on the nation's fundamental interests. No outcome stated."],
   "Dominique de Villepin":[2,"Tried in the Clearstream affair: acquitted in 2010 and again on appeal in 2011. Separately, per the page, an investigating judge asked for a Bouaké-attack case against him to go to the Court of Justice of the Republic; no outcome stated."],
@@ -374,7 +379,7 @@ const ent = {
 };
 function eiLine(name){
   const i = info[name];
-  if(i && i[0]===null) return `<div class="wpi na" title="Not checked: little public documentation on this candidate"><span class="wlab ei">💼 EI</span> <span class="wnum">not checked</span></div>`;
+  if((i && i[0]===null) || lightCheck.has(name)) return `<div class="wpi na" title="Not checked: little public documentation on this candidate"><span class="wlab ei">💼 EI</span> <span class="wnum">not checked</span></div>`;
   const e = ent[name] || [0,"No private-sector business experience documented on the page."];
   return `<div class="wpi" title="${esc(e[1])}"><span class="wlab ei">💼 EI</span> <span class="wbar ei"><i style="width:${e[0]}%"></i></span> <span class="wnum">${e[0]}</span></div>`;
 }
@@ -384,11 +389,12 @@ function cuffs(n){
 }
 function legalLine(name){
   const i = info[name];
-  if(i && i[0]===null) return `<div class="hx unk" title="Not checked: little public documentation on this candidate"><span class="cuff g">${cuffs(1)}</span> law &amp; justice: not checked</div>`;
+  if((i && i[0]===null) || lightCheck.has(name)) return `<div class="hx unk" title="Not checked: little public documentation on this candidate"><span class="cuff g">${cuffs(1)}</span> law &amp; justice: not checked</div>`;
   const l = legal[name];
   if(!l) return `<div class="hx none" title="Nothing documented in the sources I checked"><span class="cuff g">${cuffs(1)}</span> none documented</div>`;
   return `<div class="hx" title="${esc(l[1])}"><span class="cuff">${cuffs(l[0])}</span> <span class="hnote">${esc(l[1])}</span></div>`;
 }
+const lightCheck = new Set(["Gilles Platret"]); // added late: only age, party, start of mandates checked
 function eduLine(name){
   const e = edu[name];
   if(!e) return `<div class="hx none" title="No degree stated on the Wikipedia page (this does not mean none)"><span class="ghostv">🎓</span> degree: not stated</div>`;
@@ -404,7 +410,7 @@ function polLine(name){
 }
 function healthLine(name){
   const i = info[name];
-  if(i && i[0]===null) return `<div class="hx unk" title="Not checked: little public documentation on this candidate">🦠 health: not checked</div>`;
+  if((i && i[0]===null) || lightCheck.has(name)) return `<div class="hx unk" title="Not checked: little public documentation on this candidate">🦠 health: not checked</div>`;
   const h = health[name];
   if(!h) return `<div class="hx none" title="Nothing documented in the sources I checked. This is not proof of good health."><span class="ghostv">🦠</span> none documented</div>`;
   return `<div class="hx" title="${esc(h.note)}">${"🦠".repeat(h.n)} <span class="hnote">${esc(h.note)}</span></div>`;
@@ -433,7 +439,7 @@ function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;
 function renderTabs(){
   const el = document.getElementById("tabs");
   const defs = [{id:"all",label:"All ("+candidates.length+")"}]
-    .concat(groups.map(g=>({id:g.id,label:g.label.split(" ")[0]+" ("+candidates.filter(c=>c.s===g.id).length+")"})));
+    .concat(groups.map(g=>({id:g.id,label:badgeText[g.id]+" ("+candidates.filter(c=>c.s===g.id).length+")"})));
   el.innerHTML = defs.map(d=>`<button class="tab" data-f="${d.id}" aria-pressed="${filter===d.id}">${d.label}</button>`).join("");
   el.querySelectorAll("button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderTabs();renderList();});
 }
@@ -470,6 +476,17 @@ document.getElementById("sortbtn").addEventListener("click",e=>{sortWpi=!sortWpi
 document.getElementById("q").addEventListener("input",e=>{query=e.target.value;renderList();});
 document.getElementById("count-declared").textContent = candidates.filter(c=>c.s===D).length;
 renderTabs(); renderList();
+// snowfall
+(function(){
+  const flakes = ["❄","❅","❆"];
+  for(let i=0;i<22;i++){
+    const f = document.createElement("div");
+    f.className = "flake"; f.textContent = flakes[i%3]; f.setAttribute("aria-hidden","true");
+    f.style.left = (Math.random()*100)+"vw"; f.style.fontSize = (12+Math.random()*18)+"px";
+    f.style.animationDuration = (9+Math.random()*10)+"s"; f.style.animationDelay = (-Math.random()*14)+"s";
+    document.body.appendChild(f);
+  }
+})();
 </script>
 </body>
 </html>
