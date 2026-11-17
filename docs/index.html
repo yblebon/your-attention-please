@@ -79,11 +79,11 @@
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
   .card h3{margin:0;font-size:1.05rem}
-  .progwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card);-webkit-overflow-scrolling:touch}
-  table.prog{border-collapse:separate;border-spacing:0;font-size:.8rem;line-height:1.35;min-width:1500px;width:100%}
-  table.prog th,table.prog td{padding:8px 10px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:top;text-align:left;min-width:170px}
+  .progwrap{overflow-x:auto;width:100vw;position:relative;left:50%;margin-left:-50vw;box-sizing:border-box;max-width:100vw;border-left:0;border-right:0;border:1px solid var(--line);border-radius:12px;background:var(--card);-webkit-overflow-scrolling:touch}
+  table.prog{border-collapse:separate;border-spacing:0;font-size:.8rem;line-height:1.35;min-width:1180px;width:100%}
+  table.prog th,table.prog td{padding:8px 10px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:top;text-align:left;min-width:125px}
   table.prog thead th{position:sticky;top:0;background:#0e3226;color:var(--gold);z-index:2;font-weight:600}
-  table.prog tbody th{position:sticky;left:0;background:#0e3226;z-index:1;min-width:170px;font-weight:400}
+  table.prog tbody th{position:sticky;left:0;background:#0e3226;z-index:1;min-width:150px;font-weight:400}
   table.prog thead th:first-child{left:0;z-index:3}
   table.prog tbody th small{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}
   table.prog td.na{color:var(--muted);opacity:.6}
@@ -109,7 +109,7 @@
   <div class="wrap">
     <h1><span class="pk">🎄</span> French Presidential Election 2027</h1>
     <p class="sub">Candidates declared, considering, and no longer in the race — status as of 17 November 2026</p>
-    <p class="sub" id="version" style="font-size:.8rem;opacity:.75"><!--version-->v1.0.1 · last updated 17 November 2026<!--/version--></p>
+    <p class="sub" id="version" style="font-size:.8rem;opacity:.75"><!--version-->v1.0.2 · last updated 17 November 2026<!--/version--></p>
     <div class="facts">
       <div class="fact"><b>18 April 2027</b>First round</div>
       <div class="fact"><b>2 May 2027</b>Runoff (if needed)</div>
