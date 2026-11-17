@@ -88,6 +88,12 @@
   table.prog tbody th small{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}
   .progsel{display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;color:var(--muted);font-size:.9rem}
   .progsel select{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font:inherit}
+  th.colh{cursor:grab}
+  th.colh.dragover{outline:2px dashed var(--gold);outline-offset:-3px}
+  .colmv{display:flex;gap:4px;margin-bottom:4px}
+  .colmv button{border:1px solid var(--line);background:transparent;color:var(--gold);border-radius:6px;font-size:.65rem;line-height:1;padding:3px 7px;cursor:pointer}
+  .colmv button:disabled{opacity:.3;cursor:default}
+  .colmv button:not(:disabled):hover{background:rgba(255,255,255,.12)}
   table.prog td.na{color:var(--muted);opacity:.6}
   table.prog tbody tr:hover td{background:rgba(255,255,255,.04)}
   .top{display:flex;gap:12px;align-items:center}
@@ -111,7 +117,7 @@
   <div class="wrap">
     <h1><span class="pk">🎄</span> French Presidential Election 2027</h1>
     <p class="sub">Candidates declared, considering, and no longer in the race — status as of 17 November 2026</p>
-    <p class="sub" id="version" style="font-size:.8rem;opacity:.75"><!--version-->v1.0.3 · last updated 17 November 2026<!--/version--></p>
+    <p class="sub" id="version" style="font-size:.8rem;opacity:.75"><!--version-->v1.0.4 · last updated 17 November 2026<!--/version--></p>
     <div class="facts">
       <div class="fact"><b>18 April 2027</b>First round</div>
       <div class="fact"><b>2 May 2027</b>Runoff (if needed)</div>
@@ -306,19 +312,32 @@ function renderProgrammes(){
   const bind = () => { const el = document.getElementById("progGroup"); if(el) el.onchange = e=>{ progGroup = e.target.value; renderProgrammes(); }; };
   prog_missing.forEach(n=>console.warn("prog: no candidate named", n));
   if(!rows.length){ document.getElementById("list").innerHTML = picker+'<p class="empty">No candidates match your search.</p>'; bind(); return; }
-  const head = progSubjects.map(x=>`<th scope="col">${x[1]}</th>`).join("");
+  const head = progOrder.map((si,pos)=>`<th scope="col" draggable="true" data-pos="${pos}" class="colh"><span class="colmv"><button type="button" data-mv="-1" aria-label="Move ${progSubjects[si][1]} left"${pos===0?" disabled":""}>◀</button><button type="button" data-mv="1" aria-label="Move ${progSubjects[si][1]} right"${pos===progOrder.length-1?" disabled":""}>▶</button></span>${progSubjects[si][1]}</th>`).join("");
   const body = rows.map(c=>`<tr><th scope="row"><b>${esc(c.n)}</b><small>${esc(c.p)}</small></th>${
-    prog[c.n].map(v=>v?`<td>${esc(v)}</td>`:`<td class="na" title="No position found in the sources I checked">—</td>`).join("")}</tr>`).join("");
+    progOrder.map(si=>prog[c.n][si]).map(v=>v?`<td>${esc(v)}</td>`:`<td class="na" title="No position found in the sources I checked">—</td>`).join("")}</tr>`).join("");
   const noData = candidates.filter(c=>!prog[c.n]).length;
   document.getElementById("list").innerHTML =
     `<h2>Programmes <small>${rows.length} candidates · one short idea per subject · ${noData} others have no documented positions yet</small></h2>
      ${picker}
      <div class="progwrap"><table class="prog"><thead><tr><th scope="col">Candidate</th>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
   bind();
+  const tb = document.querySelector("table.prog");
+  tb.querySelectorAll("th.colh button").forEach(b=>b.onclick=()=>{ const pos=+b.closest("th").dataset.pos; moveCol(pos,pos+(+b.dataset.mv)); });
+  let dragPos = null;
+  tb.querySelectorAll("th.colh").forEach(th=>{
+    th.ondragstart = e=>{ dragPos=+th.dataset.pos; e.dataTransfer.effectAllowed="move"; e.dataTransfer.setData("text/plain",String(dragPos)); };
+    th.ondragover = e=>{ if(dragPos!==null){ e.preventDefault(); th.classList.add("dragover"); } };
+    th.ondragleave = ()=>th.classList.remove("dragover");
+    th.ondrop = e=>{ e.preventDefault(); const to=+th.dataset.pos, from=dragPos; dragPos=null; moveCol(from,to); };
+  });
 }
 const prog_missing = Object.keys(prog).filter(n=>!candidates.some(c=>c.n===n));
 
 let filter = "all", query = "", sortWpi = false, progGroup = "all";
+let progOrder = progSubjects.map((_,i)=>i);
+try{ const o = JSON.parse(localStorage.getItem("progOrder")||"null"); if(Array.isArray(o) && o.length===progOrder.length && [...o].sort((a,b)=>a-b).every((v,i)=>v===i)) progOrder = o; }catch(e){}
+const saveOrder = () => { try{ localStorage.setItem("progOrder", JSON.stringify(progOrder)); }catch(e){} };
+function moveCol(from,to){ if(to<0||to>=progOrder.length||from===to) return; const [x]=progOrder.splice(from,1); progOrder.splice(to,0,x); saveOrder(); renderProgrammes(); }
 
 // Custom sections from sections.json (same folder as this page)
 const norm = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
