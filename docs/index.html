@@ -79,6 +79,15 @@
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
   .card h3{margin:0;font-size:1.05rem}
+  .progwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card);-webkit-overflow-scrolling:touch}
+  table.prog{border-collapse:separate;border-spacing:0;font-size:.8rem;line-height:1.35;min-width:1500px;width:100%}
+  table.prog th,table.prog td{padding:8px 10px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:top;text-align:left;min-width:170px}
+  table.prog thead th{position:sticky;top:0;background:#0e3226;color:var(--gold);z-index:2;font-weight:600}
+  table.prog tbody th{position:sticky;left:0;background:#0e3226;z-index:1;min-width:170px;font-weight:400}
+  table.prog thead th:first-child{left:0;z-index:3}
+  table.prog tbody th small{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}
+  table.prog td.na{color:var(--muted);opacity:.6}
+  table.prog tbody tr:hover td{background:rgba(255,255,255,.04)}
   .top{display:flex;gap:12px;align-items:center}
   .av{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:1rem;color:#fff;letter-spacing:.5px;border:2px solid var(--gold);box-shadow:0 0 10px var(--glow)}
   .links{display:flex;gap:8px;flex-wrap:wrap;font-size:.82rem}
@@ -99,7 +108,7 @@
 <header>
   <div class="wrap">
     <h1><span class="pk">🎄</span> French Presidential Election 2027</h1>
-    <p class="sub">Candidates declared, considering, and no longer in the race — status as of 9 November 2026</p>
+    <p class="sub">Candidates declared, considering, and no longer in the race — status as of 17 November 2026</p>
     <div class="facts">
       <div class="fact"><b>18 April 2027</b>First round</div>
       <div class="fact"><b>2 May 2027</b>Runoff (if needed)</div>
@@ -121,6 +130,7 @@
 
   <footer>
     <p><b>Notes.</b> This list is provisional. Only candidates who gather 500 valid sponsorships and are validated by the Constitutional Council will appear on the ballot (12 did in 2022). Presidents are limited to two consecutive terms, so Emmanuel Macron cannot run. Within each group, candidates are ordered roughly from left to right; order carries no other meaning.</p>
+    <p><b>Programmes.</b> The 📜 Programmes tab shows one short idea per candidate and subject, taken from the "key measures" that <a href="https://votons-2027.fr/themes">votons-2027.fr</a> lists for each theme (updated 10 Nov 2026) and, for pensions, from <a href="https://lcp.fr/actualites/presidentielle-que-proposent-les-candidats-a-l-elysee-sur-les-retraites-441751">LCP</a> (September 2026; marked "earlier reporting"). I paraphrased in English and show only one measure per cell, so a cell is a sample of a programme, not a summary. "—" means nothing on that subject turned up, or the excerpt was off-topic, not that the candidate has no view. Some items come from 2021–2024 material (notably Bertrand, Roussel, Arthaud, Asselineau, Zemmour), and not every candidate has a published programme yet. Only the 26 candidates with at least one documented position are shown. Sources are compiled by third parties and I did not check each against the candidate's own programme, so please check the official programme before relying on a cell.</p>
     <p><b>Links and avatars.</b> Website links come from each candidate's France-Vote profile ("Site officiel"). Where that is a party or movement site rather than a personal one, the button says "Party site". "Find on X" opens an X people search for the name, because I could not verify each official handle from here. The round avatars show initials, not photos.</p>
     <p><b>Age and sex.</b> Birth dates come from each person's English Wikipedia page, and ages are calculated from today's date when the page loads. For 13 minor or little-documented candidates I could not find a reliable birth date, so no age is shown. Sex is shown as presented in public sources and, for those minor candidates, inferred from first names and the press's grammatical forms.</p>
     <p><b>Children.</b> Numbers are as stated on each person's English Wikipedia page. "children n/a" means the page doesn't say, not that the person has none. *Xavier Bertrand's page gives 3 in the text and 5 in the infobox.</p>
@@ -130,9 +140,11 @@
     <p><b>Years in politics (🏛️).</b> One 🏛️ per started decade, counted from the earliest political role, candidacy or office documented on each person's Wikipedia page (hover for the role). "≥" means the page gives only a later date, so the real figure may be higher. Journalism, business or union careers are not counted as politics. Hollande's start (1979) is approximate.</p>
     <p><b>Law and justice (handcuffs).</b> One cuff = investigated or subject of a complaint only; two = formally charged or tried, including cases ending in acquittal or dismissal; three = at least one conviction. Everyone is presumed innocent unless convicted, and an investigation or complaint is not a finding of guilt. Only matters involving the person themselves are counted, as stated on their Wikipedia page, so cases where they are the victim or plaintiff, or that concern relatives or their party, are left out. "None documented" means none appeared in those pages, which may lag behind recent developments. A 'témoin assisté' status is counted as one cuff because it is not a formal charge. Please check current sources before relying on any entry.</p>
     <p><b>Health notes (🦠).</b> One 🦠 per health condition that the person has publicly disclosed or that major outlets have reported. "None documented" means nothing turned up in the pages I checked, not that the person is in good health. Candidates marked "not checked" are minor or late-added candidates with too little public documentation. Family members' health and speculation are excluded.</p>
+    <p><b>Update of 17 November 2026.</b> Checked again today. New: Dominique de Villepin is expected to state his position on Friday 20 November at 11:00 in Paris (AFP, 17 Nov); he stays under "Considering" until then. No other declarations or withdrawals found since 12 November, and Bruno Le Maire's status is unchanged. Hollande still says he will decide in December, and the Écologistes vote on Marine Tondelier is still due in December. A late-publishing aggregator lists Cazeneuve and Villepin as "withdrawn", which contradicts the news above, so I did not use it. I could not confirm that the RN's detailed pension reform was published today, so Marine Le Pen's pension cell is unchanged. Follower counts could not be refreshed (the source is unreachable from here) and remain the 26 October figures. Latest poll aggregate (votons-2027.fr, 17 Nov): Le Pen 33.1%, Mélenchon 17.4%, Philippe 12.7%, Glucksmann 11.6%, Lisnard 7.9%, Retailleau 5.6%, Attal 4.3%, Zemmour 3.6%; polls are not shown on the cards.</p>
+    <p><b>Update of 12 November 2026.</b> No new declarations or withdrawals found since Teddy Riner on 9 November. Bruno Le Maire: a 12 November headline reportedly says he is not a candidate even though he has presented a project; I could not open it, and an August article described his position as ambiguous, so he stays under "Considering". Still pending: François Hollande's decision (December, possibly January), the Écologistes members' vote on Marine Tondelier (December), and decisions from Bernard Cazeneuve, Dominique de Villepin and Élisabeth Borne (the last not listed on this page). Lydie Massard (UDB) appears as conditionally declared in one list but I could not verify her, so she is not listed. Follower counts are still the 26 October figures.</p>
     <p><b>Update of 9 November 2026.</b> New: Teddy Riner announced his candidacy today (9 Nov), so he is now listed as declared; he was added the same day, so only his age and number of children were checked and his health, legal and entrepreneurship fields show "not checked". Nothing else changed in the sources I could reach: Hollande still says he will decide in December, the Écologistes members' vote on Marine Tondelier is still due in December, and I found no announcement from Bruno Le Maire. Follower counts are still the 26 October figures.</p>
     <p><b>Update of 3 November 2026.</b> New since 27 October: Gilles Platret (declared 8 Oct), Emmanuel Dubuisson and Jean-Michel Fauvergue (listed as declared), Olivier Becht and Mira Markovic details, and Édouard Philippe's new legal status (29 Oct). Still pending: Bruno Le Maire's announced October decision (nothing found), François Hollande's December decision, and the Écologistes members' vote on 10–13 December. The four candidacies without a verifiable declaration date (Mlekuz, Mathieu, Legendre, Durif) are kept but flagged. Gilles Platret was added late, so only his age and political start were checked.</p>
-    <p>Sources (checked 26 Oct – 9 Nov 2026):</p>
+    <p>Sources (checked 26 Oct – 17 Nov 2026):</p>
     <ul>
       <li><a href="https://www.france-vote.fr/candidats">France-Vote – Les candidats à la présidentielle 2027</a></li>
       <li><a href="https://www.publicsenat.fr/actualites/politique/election-presidentielle-2027-qui-sont-les-candidats-declares-ou-presque">Public Sénat – Candidats déclarés ou presque</a></li>
@@ -199,9 +211,9 @@ const candidates = [
   {n:"Sylvain Durif", p:"Elvita", g:"Other", s:D, t:"Candidacy mentioned by the press; no verifiable declaration date found."},
 
   // Considering
-  {n:"Dominique de Villepin", p:"La France humaniste", g:"Centre", s:C, t:"Former prime minister. Said on 30 August he wants to be a candidate and claims several hundred of the 500 sponsorships, but has not formally declared."},
+  {n:"Dominique de Villepin", p:"La France humaniste", g:"Centre", s:C, t:"Former prime minister. Said on 30 August he wants to be a candidate and claims several hundred of the 500 sponsorships, but has not formally declared. AFP reports he will state his position on Friday 20 November at 11:00 in Paris."},
   {n:"François Hollande", p:"Parti socialiste", g:"Social democrats", s:C, t:"Former president and deputy for Corrèze. Published a book in September and says he will announce his decision in December."},
-  {n:"Bruno Le Maire", p:"Renaissance (former minister)", g:"Centre", s:C, t:"Said he would announce his decision in October; no announcement found as of 3 November."},
+  {n:"Bruno Le Maire", p:"Renaissance (former minister)", g:"Centre", s:C, t:"Said he would announce his decision in October. A 12 November headline reportedly says he is not a candidate while presenting a project, but I could not open the article, so he stays here until confirmed."},
   {n:"Jean Lassalle", p:"Résistons !", g:"Sovereignists", s:C, t:"Says he holds half the needed sponsorships; running depends on a fundraising drive."},
 
   // Out
@@ -219,6 +231,73 @@ const groups = [
   {id:O, label:"Not running / eliminated", note:"Withdrew or lost a primary"}
 ];
 const badgeText = {declared:"Declared", considering:"Considering", out:"Out"};
+
+// Programmes: one short idea per candidate and subject. Order of values = progSubjects. null = nothing documented in the sources.
+const progSubjects = [
+  ["ret","Pensions"],["fis","Taxes & purchasing power"],["imm","Immigration"],["san","Health"],
+  ["sec","Security & justice"],["eco","Ecology & energy"],["eur","Europe & defence"],["edu","Education"]
+];
+const prog = {
+  "Nathalie Arthaud":["Index pensions to prices","SMIC at €2,200; wages and pensions indexed to inflation","Regularise all undocumented migrants; free movement",
+    "Decriminalise cannabis",null,null,"Workers' control over arms companies' accounts",null],
+  "Anasse Kazib":["Retirement at 60 (55 for hard jobs), no contribution-year condition","SMIC €2,000 net, +€500 on wages, indexed to inflation","Regularise all undocumented migrants; free movement",
+    "Nationalise the pharmaceutical industry","Repeal all \"security laws\"","Committees of workers, scientists and residents","\"Not a euro for war\"; dismantle the French war machine","No to the SNU and militarised schools"],
+  "Selma Labib":["Raise wages and pensions by €400 a month for all","Raise wages and pensions by €400 a month for all","Free movement; regularise all undocumented migrants",null,null,null,null,null],
+  "Jean-Luc Mélenchon":["Repeal the 2023 reform; earlier reporting: back to 60 with 40 years of contributions","SMIC at €1,700 net now; wages indexed to inflation","Full birthright citizenship for all children born in France",
+    "\"100% Sécu\": full reimbursement of prescribed care","Restore community policing","100% renewables by 2060 at the latest","Suspend the 3% deficit rule","Truly free public education"],
+  "Fabien Roussel":["Retirement at 60 at full rate, by law","Cap the fuel price at €1.60 a litre","A \"humane\" policy of welcoming migrants","Move towards 100% social security cover",
+    "Prosecutors must seek ineligibility sentences","Defends a 30% cut in electricity and gas prices","Leave NATO and ask for its dissolution","€1 school meals in all schools"],
+  "François Ruffin":["One extra pension quarter credited","Index wages to inflation",null,"Two-tier public medicines body",null,"End thermal \"sieves\" (poorly insulated homes) by 2032","Halt free-trade talks with Malaysia","Big plan to raise teachers' pay"],
+  "Juan Branco":["Rates set by life expectancy per social and professional category","Elect the Banque de France governor; restore the Treasury circuit","Conditional family reunification; decentralised asylum processing",
+    "Emergency plan against medical deserts","Abolish the BAC units in favour of community policing","Leave the European electricity market","Leave the EU, the euro, the Council of Europe and/or Schengen","Truly free university study"],
+  "Marine Tondelier":["Repeal the age of 64; earlier reporting: 60 for early starters or hard jobs, 62 for others","Minimum wage to €2,000 gross from 2027","Guarantee birthright citizenship for children born in France",
+    "2,000 new health centres by 2030","9,000 new magistrate posts over ten years","Moratorium on all mega-reservoir (\"mégabassines\") projects","Raise the EU budget to 2% of European GDP by 2035","Class size of 19 pupils by 2032"],
+  "Delphine Batho":[null,"Ecological footprint as the new economic compass",null,null,null,"Farm aid conditional on organic farming",null,"Education in sensitivity, nature and culture"],
+  "Raphaël Glucksmann":["No longer focus on the legal age alone; earlier reporting: repeal the 2023 reform","SMIC at €1,600 net within two years","European sea-rescue force",
+    "Counter the financialisation of the health system","Modern community policing","Ecological emergency written into the Constitution","€500bn European defence fund via joint borrowing","Fewer pupils per teacher in primary"],
+  "Karim Bouamrane":[null,"€100bn sovereign fund, largely financed by taxes","France must remain a land of asylum","Fight medical deserts","Fight drug trafficking determinedly","A \"just transition\"","A strong France building a Europe that protects","Training leading to a chosen job for every young person"],
+  "Bernard Cazeneuve":["Contribution duration rather than a higher legal age",null,"Firmness: no weakness against irregular immigration","Youth mental health (\"silent ordeal\")",
+    "Community police with dedicated, trained staff","10-year plan to renovate school buildings (School-Climate-Solidarity)","End the unanimity rule; decide by majority","Better trained, better paid teachers"],
+  "Gabriel Attal":["Add a capitalisation pillar next to pay-as-you-go; end the legal age","No tax rise during the term; €150bn of savings","Cut family immigration in favour of work immigration",
+    "An AI medical assistant for every French person","Real life sentences for serial rapists","Triple the pace of emission cuts; 14 EPR reactors","Halve reliance on non-European military suppliers","Fewer than 20 pupils per class"],
+  "Édouard Philippe":["Raise the age gradually to 65 and contributions to 45 years in under ten years","€50bn cut in production taxes through a pact with firms","Halve immigration",
+    "Stabilise health spending by spending better","Minimum sentences for the most serious offences","Energy sovereignty by relaunching nuclear","Complete the single market; remove national specifications","Make school heads the real \"bosses\" of schools"],
+  "Xavier Bertrand":["Work longer as people live longer; raise the legal age",null,"Parliament sets annual quotas by type of immigration","Apply the Léonetti law; palliative care everywhere",
+    "Automatic prison sentences","Pro-renewables; prefers photovoltaic","Never share France's UN Security Council seat","Make the school head the real boss"],
+  "David Lisnard":["Legal age of 65 as an \"urgent national imperative\"","Abolish the C3S business levy","Divide residence permits issued by eight","Double the number of medical students by 2030",
+    "End automatic sentence reductions","Bring renewable projects under ordinary law","Treaty to \"democratise\" Europe","A real right to choose one's school"],
+  "Bruno Retailleau":["Legal age above 64, tied to healthy life expectancy; renewed work-and-pension cumul","Remove social contributions on hours worked beyond 1,623 a year","Residency requirement for the family income benefit",
+    "French medical AI trained on national health data","Digital \"Vauban plan\" led by ANSSI (cybersecurity)",null,"Reciprocity clauses in all trade agreements","Pay teachers better"],
+  "Nicolas Dupont-Aignan":["Pension at least equal to the minimum old-age benefit","75% of public procurement for French-made goods","Abolish birthright citizenship by referendum",
+    "Stop maternity closures; reopen hospital beds","10,000 net extra police and gendarmes in 5 years","Drop the 50% nuclear share target for 2035","Leave the EU","+15% net teacher pay in 4 years"],
+  "François Asselineau":["State guarantee of retirees' purchasing power","SMIC +24% over the term","Leave Schengen","Reopen 30,000 hospital beds","+20% budget for justice and police","Reduce France's ecological footprint","Frexit: leave the EU, the euro and NATO","Restore the national Baccalauréat framework"],
+  "Florian Philippot":["Lower the retirement age","Save €20bn a year through Frexit","Return to the border those with no right to be in France","Abolish the regional health agencies (ARS)",
+    "Recreate visible, permanent community policing","Leave the European electricity market","Leave EU, euro, Schengen, ECHR, NATO and WHO","Half of primary school time on mastering French"],
+  "Marine Le Pen":["Refuse any rise in the legal age; earlier reporting: back to 62 (60 for early starters)","Cut VAT from 20% to 5.5% on energy (fuel, gas, electricity)","End birthright citizenship (droit du sol)",
+    "€20bn emergency health support plan","Reinstate minimum sentences","Halt wind projects and gradually dismantle existing farms","Raise the defence budget to €55bn by 2027","School uniform in primary and middle school"],
+  "Éric Zemmour":[null,"Cut France's EU contribution by 20% (cap €20bn a year)","Deport all foreigners held in French prisons","1,000 state-salaried doctors in medical deserts over 5 years",
+    "More European customs, police and judicial cooperation against drugs","Lift the 2035 ban on combustion-engine car sales","Abolish the European Commission, replace it with a secretariat","Reserve Erasmus for young Europeans"],
+  "Dominique de Villepin":[null,"Shift €200bn of contributions to a universal CSG: +€200 net a month on average","Reception conditional on accepting returns to countries of origin","Rebuild strategic medicine stocks",
+    "Plan to strengthen the republican police","6 EPR2 reactors, industrial offshore wind, mass electrification","A \"pause\" in European unification","Pay rise of at least 10% for all school staff"],
+  "Natacha Polony":[null,"Protect farmers from global competition","Those who break the rules must be punished",null,"Closed educational centres that really work","No rollback of environmental norms","Press the ECB to stop its current policy","10-year education programming law"],
+  "Antoine Mikolajczak":["Account for hardship in pensions","Public procurement favours sovereignty",null,"Appoint a health \"Défenseur\"",null,"Citizens' chamber for ecology","Make EU trade-defence tools more reactive","Local knowledge in the common core"],
+  "Emmanuel Dubuisson":[null,null,null,null,"Investigations better linked to money flows",null,null,null]
+};
+function renderProgrammes(){
+  const q = query.trim().toLowerCase();
+  const rows = candidates.filter(c=>prog[c.n] && (!q || (c.n+" "+c.p+" "+c.g).toLowerCase().includes(q)));
+  prog_missing.forEach(n=>console.warn("prog: no candidate named", n));
+  if(!rows.length){ document.getElementById("list").innerHTML = '<p class="empty">No candidates match your search.</p>'; return; }
+  const head = progSubjects.map(x=>`<th scope="col">${x[1]}</th>`).join("");
+  const body = rows.map(c=>`<tr><th scope="row"><b>${esc(c.n)}</b><small>${esc(c.p)}</small></th>${
+    prog[c.n].map(v=>v?`<td>${esc(v)}</td>`:`<td class="na" title="No position found in the sources I checked">—</td>`).join("")}</tr>`).join("");
+  const noData = candidates.filter(c=>!prog[c.n]).length;
+  document.getElementById("list").innerHTML =
+    `<h2>Programmes <small>${rows.length} candidates · one short idea per subject · ${noData} others have no documented positions yet</small></h2>
+     <div class="progwrap"><table class="prog"><thead><tr><th scope="col">Candidate</th>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+}
+const prog_missing = Object.keys(prog).filter(n=>!candidates.some(c=>c.n===n));
+
 let filter = "all", query = "", sortWpi = false;
 
 // Custom sections from sections.json (same folder as this page)
@@ -499,7 +578,8 @@ function renderTabs(){
   const el = document.getElementById("tabs");
   const defs = [{id:"all",label:"All ("+candidates.length+")"}]
     .concat(groups.map(g=>({id:g.id,label:badgeText[g.id]+" ("+candidates.filter(c=>c.s===g.id).length+")"})))
-    .concat(custom.map(x=>({id:x.id,label:esc(x.label)+" ("+x.list.length+")"})));
+    .concat(custom.map(x=>({id:x.id,label:esc(x.label)+" ("+x.list.length+")"})))
+    .concat([{id:"programmes",label:"📜 Programmes"}]);
   el.innerHTML = defs.map(d=>`<button class="tab" data-f="${d.id}" aria-pressed="${filter===d.id}">${d.label}</button>`).join("");
   el.querySelectorAll("button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderTabs();renderList();});
 }
@@ -529,6 +609,7 @@ function renderList(){
     total += items.length;
     html += `<h2>${label} <small>${items.length}${note?" · "+esc(note):""}</small></h2><div class="grid">${items.map(cardOf).join("")}</div>`;
   };
+  if(filter==="programmes"){ renderProgrammes(); return; }
   const cs = custom.find(x=>x.id===filter);
   if(cs) section(esc(cs.label), cs.note, cs.list);
   else groups.forEach(g=>{
