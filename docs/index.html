@@ -86,6 +86,8 @@
   table.prog tbody th{position:sticky;left:0;background:#0e3226;z-index:1;min-width:150px;font-weight:400}
   table.prog thead th:first-child{left:0;z-index:3}
   table.prog tbody th small{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}
+  .progsel{display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;color:var(--muted);font-size:.9rem}
+  .progsel select{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font:inherit}
   table.prog td.na{color:var(--muted);opacity:.6}
   table.prog tbody tr:hover td{background:rgba(255,255,255,.04)}
   .top{display:flex;gap:12px;align-items:center}
@@ -109,7 +111,7 @@
   <div class="wrap">
     <h1><span class="pk">🎄</span> French Presidential Election 2027</h1>
     <p class="sub">Candidates declared, considering, and no longer in the race — status as of 17 November 2026</p>
-    <p class="sub" id="version" style="font-size:.8rem;opacity:.75"><!--version-->v1.0.2 · last updated 17 November 2026<!--/version--></p>
+    <p class="sub" id="version" style="font-size:.8rem;opacity:.75"><!--version-->v1.0.3 · last updated 17 November 2026<!--/version--></p>
     <div class="facts">
       <div class="fact"><b>18 April 2027</b>First round</div>
       <div class="fact"><b>2 May 2027</b>Runoff (if needed)</div>
@@ -286,20 +288,37 @@ const prog = {
 };
 function renderProgrammes(){
   const q = query.trim().toLowerCase();
-  const rows = candidates.filter(c=>prog[c.n] && (!q || (c.n+" "+c.p+" "+c.g).toLowerCase().includes(q)));
+  const inGroup = c => {
+    if(progGroup==="all") return true;
+    const [kind,id] = [progGroup.slice(0,progGroup.indexOf(":")), progGroup.slice(progGroup.indexOf(":")+1)];
+    if(kind==="s") return c.s===id;
+    if(kind==="g") return c.g===id;
+    const sec = custom.find(x=>x.id===id); return !!sec && sec.list.includes(c);
+  };
+  const rows = candidates.filter(c=>prog[c.n] && inGroup(c) && (!q || (c.n+" "+c.p+" "+c.g).toLowerCase().includes(q)));
+  const fams = [...new Set(candidates.filter(c=>prog[c.n]).map(c=>c.g))].sort();
+  const opt = (v,l) => `<option value="${esc(v)}"${progGroup===v?" selected":""}>${l}</option>`;
+  const picker = `<label class="progsel">Show group: <select id="progGroup" aria-label="Filter programmes by group">
+    ${opt("all","All candidates")}
+    <optgroup label="Status">${groups.map(g=>opt("s:"+g.id,esc(badgeText[g.id]))).join("")}</optgroup>
+    ${custom.length?`<optgroup label="Sections">${custom.map(x=>opt("c:"+x.id,esc(x.label))).join("")}</optgroup>`:""}
+    <optgroup label="Political family">${fams.map(f=>opt("g:"+f,esc(f))).join("")}</optgroup></select></label>`;
+  const bind = () => { const el = document.getElementById("progGroup"); if(el) el.onchange = e=>{ progGroup = e.target.value; renderProgrammes(); }; };
   prog_missing.forEach(n=>console.warn("prog: no candidate named", n));
-  if(!rows.length){ document.getElementById("list").innerHTML = '<p class="empty">No candidates match your search.</p>'; return; }
+  if(!rows.length){ document.getElementById("list").innerHTML = picker+'<p class="empty">No candidates match your search.</p>'; bind(); return; }
   const head = progSubjects.map(x=>`<th scope="col">${x[1]}</th>`).join("");
   const body = rows.map(c=>`<tr><th scope="row"><b>${esc(c.n)}</b><small>${esc(c.p)}</small></th>${
     prog[c.n].map(v=>v?`<td>${esc(v)}</td>`:`<td class="na" title="No position found in the sources I checked">—</td>`).join("")}</tr>`).join("");
   const noData = candidates.filter(c=>!prog[c.n]).length;
   document.getElementById("list").innerHTML =
     `<h2>Programmes <small>${rows.length} candidates · one short idea per subject · ${noData} others have no documented positions yet</small></h2>
+     ${picker}
      <div class="progwrap"><table class="prog"><thead><tr><th scope="col">Candidate</th>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+  bind();
 }
 const prog_missing = Object.keys(prog).filter(n=>!candidates.some(c=>c.n===n));
 
-let filter = "all", query = "", sortWpi = false;
+let filter = "all", query = "", sortWpi = false, progGroup = "all";
 
 // Custom sections from sections.json (same folder as this page)
 const norm = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
