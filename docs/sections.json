@@ -2,6 +2,12 @@
   "_help": "Add your own sections here. Each one becomes an extra tab. 'candidates' lists names exactly as shown on the cards (case and accents are ignored). Unknown names are reported in the browser console.",
   "sections": [
     {
+      "id": "outgoing-president",
+      "label": "Outgoing president",
+      "note": "Current head of state; cannot run again in 2027",
+      "candidates": ["Emmanuel Macron"]
+    },
+    {
       "id": "former-pms",
       "label": "Former Prime Ministers",
       "note": "Have previously headed the French government",

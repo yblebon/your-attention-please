@@ -117,7 +117,7 @@
   <div class="wrap">
     <h1><span class="pk">🎄</span> French Presidential Election 2027</h1>
     <p class="sub">Candidates declared, considering, and no longer in the race — status as of 19 November 2026</p>
-    <p class="sub" id="version" style="font-size:.8rem;opacity:.75"><!--version-->v1.0.5 · last updated 19 November 2026<!--/version--></p>
+    <p class="sub" id="version" style="font-size:.8rem;opacity:.75"><!--version-->v1.0.6 · last updated 19 November 2026<!--/version--></p>
     <div class="facts">
       <div class="fact"><b>18 April 2027</b>First round</div>
       <div class="fact"><b>2 May 2027</b>Runoff (if needed)</div>
@@ -139,7 +139,7 @@
 
   <footer>
     <p><b>Notes.</b> This list is provisional. Only candidates who gather 500 valid sponsorships and are validated by the Constitutional Council will appear on the ballot (12 did in 2022). Presidents are limited to two consecutive terms, so Emmanuel Macron cannot run. Within each group, candidates are ordered roughly from left to right; order carries no other meaning.</p>
-    <p><b>Programmes.</b> The 📜 Programmes tab shows one short idea per candidate and subject, taken from the "key measures" that <a href="https://votons-2027.fr/themes">votons-2027.fr</a> lists for each theme (updated 10 Nov 2026) and, for pensions, from <a href="https://lcp.fr/actualites/presidentielle-que-proposent-les-candidats-a-l-elysee-sur-les-retraites-441751">LCP</a> (September 2026; marked "earlier reporting"). I paraphrased in English and show only one measure per cell, so a cell is a sample of a programme, not a summary. "—" means nothing on that subject turned up, or the excerpt was off-topic, not that the candidate has no view. Some items come from 2021–2024 material (notably Bertrand, Roussel, Arthaud, Asselineau, Zemmour), and not every candidate has a published programme yet. Only the 26 candidates with at least one documented position are shown. Sources are compiled by third parties and I did not check each against the candidate's own programme, so please check the official programme before relying on a cell.</p>
+    <p><b>Programmes.</b> The 📜 Programmes tab shows one short idea per candidate and subject, taken from the "key measures" that <a href="https://votons-2027.fr/themes">votons-2027.fr</a> lists for each theme (updated 10 Nov 2026) and, for pensions, from <a href="https://lcp.fr/actualites/presidentielle-que-proposent-les-candidats-a-l-elysee-sur-les-retraites-441751">LCP</a> (September 2026; marked "earlier reporting"). I paraphrased in English and show only one measure per cell, so a cell is a sample of a programme, not a summary. "—" means nothing on that subject turned up, or the excerpt was off-topic, not that the candidate has no view. Some items come from 2021–2024 material (notably Bertrand, Roussel, Arthaud, Asselineau, Zemmour), and not every candidate has a published programme yet. Emmanuel Macron's row is his 2022 platform from his last presidential campaign (he cannot run in 2027), not a 2027 programme; the pension, nuclear and teacher items are confirmed by <a href="https://www.publicsenat.fr/actualites/politique/presidentielle-2022-que-retenir-du-programme-d-emmanuel-macron-198600">Public Sénat</a> and <a href="https://www.institutmontaigne.org/presidentielle-2022/emmanuel-macron/repousser-lage-de-depart-a-la-retraite-a-65-ans/">Institut Montaigne</a>, while the licence-fee, police and Schengen items come from my recollection of that platform and I did not verify them in this session. Only the 27 candidates with at least one documented position are shown. Sources are compiled by third parties and I did not check each against the candidate's own programme, so please check the official programme before relying on a cell.</p>
     <p><b>Links and avatars.</b> Website links come from each candidate's France-Vote profile ("Site officiel"). Where that is a party or movement site rather than a personal one, the button says "Party site". "Find on X" opens an X people search for the name, because I could not verify each official handle from here. The round avatars show initials, not photos.</p>
     <p><b>Age and sex.</b> Birth dates come from each person's English Wikipedia page, and ages are calculated from today's date when the page loads. For 13 minor or little-documented candidates I could not find a reliable birth date, so no age is shown. Sex is shown as presented in public sources and, for those minor candidates, inferred from first names and the press's grammatical forms.</p>
     <p><b>Children.</b> Numbers are as stated on each person's English Wikipedia page. "children n/a" means the page doesn't say, not that the person has none. *Xavier Bertrand's page gives 3 in the text and 5 in the infobox.</p>
@@ -229,6 +229,7 @@ const candidates = [
 
   // Out
   {n:"Olivier Faure", p:"Parti socialiste", g:"Social democrats", s:O, t:"Came second in the primary with 14.46%."},
+  {n:"Emmanuel Macron", p:"Renaissance (Outgoing president)", g:"Centre", s:O, t:"Outgoing president. The Constitution limits a president to two consecutive terms, so he cannot run in 2027; his term ends in May 2027."},
   {n:"Ségolène Royal", p:"Parti socialiste", g:"Social democrats", s:O, t:"Third in the primary with 7.62%; said she backs the winner."},
   {n:"Emmanuel Maurel", p:"Gauche républicaine et socialiste", g:"Left", s:O, t:"Fourth in the primary with 5.92%; pledged support to Glucksmann."},
   {n:"Jérôme Guedj", p:"Parti socialiste", g:"Social democrats", s:O, t:"Fifth in the primary with 5.83%; will continue campaigning in a role set by Glucksmann."},
@@ -292,7 +293,10 @@ const prog = {
     "Plan to strengthen the republican police","6 EPR2 reactors, industrial offshore wind, mass electrification","A \"pause\" in European unification","Pay rise of at least 10% for all school staff"],
   "Natacha Polony":[null,"Protect farmers from global competition","Those who break the rules must be punished",null,"Closed educational centres that really work","No rollback of environmental norms","Press the ECB to stop its current policy","10-year education programming law"],
   "Antoine Mikolajczak":["Account for hardship in pensions","Public procurement favours sovereignty",null,"Appoint a health \"Défenseur\"",null,"Citizens' chamber for ecology","Make EU trade-defence tools more reactive","Local knowledge in the common core"],
-  "Emmanuel Dubuisson":[null,null,null,null,"Investigations better linked to money flows",null,null,null]
+  "Emmanuel Dubuisson":[null,null,null,null,"Investigations better linked to money flows",null,null,null],
+  // 2022 programme (his last presidential campaign), not a 2027 one
+  "Emmanuel Macron":["Raise the legal age gradually to 65 by 2032, with exemptions for arduous jobs and long careers","Abolish the audiovisual licence fee","Remove foreigners who commit offences faster",
+    null,"Double the police and gendarme presence on the ground by 2030","Build 6 EPR2 reactors quickly and study 8 more","Overhaul Schengen with a political steering council","\"New pact\" for teachers: pay rises tied to new tasks"]
 };
 function renderProgrammes(){
   const q = query.trim().toLowerCase();
@@ -383,7 +387,7 @@ const info = {
   "Mira Markovic":[null,"F"], "Francis Lalanne":["1958-08-08","M"], "Antoine Mikolajczak":[null,"M"],
   "Clara Egger":[null,"F"], "Manolo Mlekuz":[null,"M"], "Benoît Mathieu":[null,"M"],
   "Jean-François Legendre":[null,"M"], "Sylvain Durif":[null,"M"],
-  "Dominique de Villepin":["1953-11-14","M"], "François Hollande":["1954-08-12","M"], "Bruno Le Maire":["1969-04-15","M"],
+  "Dominique de Villepin":["1953-11-14","M"], "Emmanuel Macron":["1977-12-21","M"], "François Hollande":["1954-08-12","M"], "Bruno Le Maire":["1969-04-15","M"],
   "Jean Lassalle":["1955-05-03","M"], "Olivier Faure":["1968-08-18","M"], "Ségolène Royal":["1953-09-22","F"],
   "Emmanuel Maurel":["1973-05-10","M"], "Jérôme Guedj":["1972-01-23","M"], "Philippe Brun":[null,"M"],
   "Clémentine Autain":["1973-05-26","F"]
