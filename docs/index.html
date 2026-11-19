@@ -117,7 +117,7 @@
   <div class="wrap">
     <h1><span class="pk">🎄</span> French Presidential Election 2027</h1>
     <p class="sub">Candidates declared, considering, and no longer in the race — status as of 19 November 2026</p>
-    <p class="sub" id="version" style="font-size:.8rem;opacity:.75"><!--version-->v1.0.6 · last updated 19 November 2026<!--/version--></p>
+    <p class="sub" id="version" style="font-size:.8rem;opacity:.75"><!--version-->v1.0.7 · last updated 19 November 2026<!--/version--></p>
     <div class="facts">
       <div class="fact"><b>18 April 2027</b>First round</div>
       <div class="fact"><b>2 May 2027</b>Runoff (if needed)</div>
@@ -398,12 +398,14 @@ const kids = {
   "Anasse Kazib":2, "Jean-Luc Mélenchon":1, "Marine Tondelier":1, "Raphaël Glucksmann":2, "Bernard Cazeneuve":2,
   "Karim Bouamrane":3, "Édouard Philippe":3, "Xavier Bertrand":"3–5", "David Lisnard":3, "Bruno Retailleau":3,
   "Nicolas Dupont-Aignan":2, "Marine Le Pen":3, "Éric Zemmour":3, "Dominique de Villepin":3, "François Hollande":4,
-  "Bruno Le Maire":4, "Ségolène Royal":4, "Clémentine Autain":2
+  "Bruno Le Maire":4, "Ségolène Royal":4, "Clémentine Autain":2,
+  "Emmanuel Macron":"step"
 };
 // Health: only conditions the person has publicly disclosed, or that major outlets have reported, found on
 // English Wikipedia (plus press confirmation for Philippe). One 🦠 per documented condition.
 // Anyone not listed here had nothing documented in the pages I checked, which is not proof of good health.
 const health = {
+  "Emmanuel Macron": {n:1, note:"Tested positive for COVID-19 in December 2020, announced by the Élysée."},
   "Édouard Philippe": {n:2, note:"Vitiligo (disclosed 2020) and alopecia areata (disclosed 2023). Both are autoimmune skin and hair conditions, self-disclosed."},
   "François Asselineau": {n:1, note:"Tested positive for COVID-19 in July 2021, as reported by the press. Not clear whether he disclosed it himself."}
 };
@@ -417,6 +419,7 @@ const edu = {
   "Bernard Cazeneuve":[2,"IEP Bordeaux (school listed; degree not named)"],
   "Gabriel Attal":[2,"Master of Public Affairs, Sciences Po (2012)"],
   "Édouard Philippe":[3,"Sciences Po (1992) and ENA (1995–97)"],
+  "Emmanuel Macron":[3,"Master's in philosophy (Paris Nanterre), Sciences Po, then ENA (graduated 2004)"],
   "Xavier Bertrand":[3,"DESS in local administration and a master's in public law, Reims"],
   "David Lisnard":[2,"Master's in public law, IEP Bordeaux / Paris-Panthéon-Assas"],
   "Bruno Retailleau":[3,"Master's in economics (Nantes) and Sciences Po (1985)"],
@@ -451,6 +454,7 @@ const pol = {
   "Karim Bouamrane":[1995,0,"municipal councillor, Saint-Ouen"],
   "Gabriel Attal":[2014,1,"first elected (Vanves councillor); earlier activity undated"],
   "Édouard Philippe":[1990,0,"Socialist Party member 1990–92 (first elected 2004)"],
+  "Emmanuel Macron":[2006,0,"joined the Socialist Party (2006); Élysée deputy secretary-general (2012), economy minister (2014), first elected President in 2017"],
   "Xavier Bertrand":[1981,0,"volunteered for the RPR at 16 (first elected 1998)"],
   "David Lisnard":[1996,0,"joined the RPR (first elected 2001)"],
   "Bruno Retailleau":[1988,0,"general councillor, Vendée"],
@@ -477,6 +481,7 @@ const pol = {
 const legal = {
   "Anasse Kazib":[2,"2022: summoned over an undeclared demonstration. Since Oct 2023: investigated, then due to stand trial (2025) for 'apologie du terrorisme' over social-media posts. No verdict stated on the page."],
   "Jean-Luc Mélenchon":[3,"Convicted in Dec 2019 (rebellion and provocation: 3 months suspended; intimidation of officials: €8,000 fine plus 3 months suspended) and in Sept 2021 (public defamation)."],
+  "Emmanuel Macron":[1,"As economy minister (2014–16) he was named in the 2022 'Uber Files' revelations, which reported secret contacts and a deal with Uber (see ICIJ and Le Monde). As president he has immunity from prosecution while in office. No conviction or charge against him is stated."],
   "Édouard Philippe":[1,"As mayor of Le Havre: preliminary probe (2023–24), then a judicial investigation by two financial judges. On 29 Oct 2026 he was placed under 'témoin assisté' status (a status less incriminating than a formal charge) over suspected misuse of public funds, favouritism and moral harassment in the Le Havre urban community. His lawyer called it a favourable decision. No formal charge or conviction."],
   "François Asselineau":[2,"2020 complaints alleging sexual harassment/assault; placed under formal investigation in 2021 (he denies it); charges dismissed Dec 2024; Paris Court of Appeal ordered a trial in May 2026. No verdict yet."],
   "Marine Le Pen":[3,"Convicted in 2014 (electoral fraud, €10,000), 2023 (defamation, €500) and 31 Mar 2025 (EU-funds embezzlement), the last upheld on appeal on 7 Jul 2026 with her ineligibility reduced; she is appealing to the Cour de cassation, which is due to examine her constitutional questions by 16 Dec 2026, with a ruling on the appeal expected around late March or early April 2027 (press reports). Acquitted in 2015 (incitement to hatred)."],
@@ -519,6 +524,7 @@ const ent = {
   "Anasse Kazib":[15,"Worked as a courier for chemical laboratories before joining the railway (salaried, private sector)."],
   "François Ruffin":[35,"Founded the newspaper Fakir in 1999 and edits it. The page does not say what legal or commercial form it has."],
   "Bernard Cazeneuve":[15,"Lawyer in private practice, per the page (no founder or executive role stated)."],
+  "Emmanuel Macron":[45,"Investment banker at Rothschild & Cie (2008–12), where he became a partner (salaried private-sector work plus a management role). From my recollection of his career; not re-checked on Wikipedia."],
   "Édouard Philippe":[45,"Director of Public Affairs at Areva (2007–2010) and lawyer at Debevoise & Plimpton."],
   "Xavier Bertrand":[15,"Began as an insurance agent (salaried)."],
   "Bruno Retailleau":[30,"Deputy general manager of local radio Alouette (from 1985), general manager of the Sciencescom communication school (1987–94) and first chairman of the Puy du Fou park company. Founder role not stated."],
@@ -581,6 +587,7 @@ function meta(name){
   const age = a===null ? `<span class="age na" title="Birth date not found in a reliable source">age n/a</span>` : `<span class="age">${a} years old</span>`;
   const k = kids[name];
   const kt = k===undefined ? `<span class="age na" title="Not stated in the sources I checked (this does not mean none)">children n/a</span>`
+    : k==="step" ? `<span class="age" title="No children of his own; three stepchildren through his wife Brigitte">👶 3 stepchildren</span>`
     : k==="3–5" ? `<span class="age" title="English Wikipedia gives conflicting figures: 3 in the text, 5 in the infobox">👶 3–5 children*</span>`
     : `<span class="age">👶 ${k} ${k===1?"child":"children"}</span>`;
   return `<div class="meta">${sex}${age}${kt}</div>`;
@@ -593,7 +600,7 @@ const sites = {
   "François Ruffin":["https://francoisruffin.fr","p"], "Juan Branco":["https://juan-branco.fr","p"],
   "Marine Tondelier":["https://marinetondelier.fr","p"], "Delphine Batho":["https://www.delphinebatho.fr","p"],
   "Raphaël Glucksmann":["https://raphaelglucksmann.fr","p"], "Bernard Cazeneuve":["https://www.la-convention.fr","m"],
-  "Gabriel Attal":["https://attalpresident.fr","p"], "Édouard Philippe":["https://www.edouardphilippe.fr","p"],
+  "Gabriel Attal":["https://attalpresident.fr","p"], "Emmanuel Macron":["https://www.elysee.fr","p"], "Édouard Philippe":["https://www.edouardphilippe.fr","p"],
   "Xavier Bertrand":["https://www.nousfrance.fr","m"], "David Lisnard":["https://www.unenouvelleenergie.fr/","m"],
   "Bruno Retailleau":["https://www.avecretailleau.fr","p"], "Nicolas Dupont-Aignan":["https://www.dupontaignan.fr","p"],
   "François Asselineau":["https://www.upr.fr","m"], "Florian Philippot":["https://les-patriotes.fr","m"],
